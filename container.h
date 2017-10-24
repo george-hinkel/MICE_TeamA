@@ -1,12 +1,16 @@
+#ifndef container_h
+#define container_h
+#include "item.h"
 #include <string>
 #include <iostream>
 #include <vector>
 
-class container
+class Container : public Item
 {
   public:
     std::vector<std::string> containers = {"Cone", "Cup", "Bowl"};
-    double price;
-    int howMany;
     void addContainer();
+private:
+    int max_scoops;
 };
+#endif

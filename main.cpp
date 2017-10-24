@@ -9,9 +9,9 @@ int main()
 {
   std::cout << "This works now" << std::endl;
   std::string testing = "Container works";
-  container newOne;
+  Container newOne;
   newOne.addContainer();
-  scoop other;
+  Scoop other;
   other.addFlavor();
   other.setPrice();
   std::cout << other.getPrice();
