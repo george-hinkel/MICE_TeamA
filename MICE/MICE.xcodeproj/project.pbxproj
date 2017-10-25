@@ -16,6 +16,7 @@
 		5EE878AB1FA0E7D5006FC64B /* topping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878AA1FA0E7D5006FC64B /* topping.cpp */; };
 		5EE878AD1FA0EE89006FC64B /* item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878AC1FA0EE89006FC64B /* item.cpp */; };
 		5EE878B01FA11055006FC64B /* login.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878AE1FA11055006FC64B /* login.cpp */; };
+		5EE878B31FA1153D006FC64B /* main_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878B11FA1153D006FC64B /* main_window.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,8 @@
 		5EE878AC1FA0EE89006FC64B /* item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = item.cpp; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../item.cpp"; sourceTree = "<absolute>"; };
 		5EE878AE1FA11055006FC64B /* login.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = login.cpp; path = ../../login.cpp; sourceTree = "<group>"; };
 		5EE878AF1FA11055006FC64B /* login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = login.h; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../login.h"; sourceTree = "<absolute>"; };
+		5EE878B11FA1153D006FC64B /* main_window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main_window.cpp; path = ../../main_window.cpp; sourceTree = "<group>"; };
+		5EE878B21FA1153D006FC64B /* main_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main_window.h; path = ../../main_window.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 		5EE878801F9FCCE3006FC64B /* MICE */ = {
 			isa = PBXGroup;
 			children = (
+				5EE878B11FA1153D006FC64B /* main_window.cpp */,
+				5EE878B21FA1153D006FC64B /* main_window.h */,
 				5EE878AE1FA11055006FC64B /* login.cpp */,
 				5EE878AF1FA11055006FC64B /* login.h */,
 				5EE878A91FA0E686006FC64B /* topping.h */,
@@ -159,6 +164,7 @@
 			files = (
 				5EE878AD1FA0EE89006FC64B /* item.cpp in Sources */,
 				5EE878A41F9FE758006FC64B /* Makefile in Sources */,
+				5EE878B31FA1153D006FC64B /* main_window.cpp in Sources */,
 				5EE878AB1FA0E7D5006FC64B /* topping.cpp in Sources */,
 				5EE878A31F9FE758006FC64B /* main.cpp in Sources */,
 				5EE878B01FA11055006FC64B /* login.cpp in Sources */,
