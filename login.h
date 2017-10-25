@@ -4,8 +4,7 @@
 #include <iostream>
 #include <vector>
 
-class login
-{
+class Login{
   public:
     void verify();
     std::string userName = "manager";

@@ -15,6 +15,7 @@
 		5EE878A71F9FE758006FC64B /* serving.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878A01F9FE758006FC64B /* serving.cpp */; };
 		5EE878AB1FA0E7D5006FC64B /* topping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878AA1FA0E7D5006FC64B /* topping.cpp */; };
 		5EE878AD1FA0EE89006FC64B /* item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878AC1FA0EE89006FC64B /* item.cpp */; };
+		5EE878B01FA11055006FC64B /* login.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878AE1FA11055006FC64B /* login.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +46,8 @@
 		5EE878A91FA0E686006FC64B /* topping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = topping.h; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../topping.h"; sourceTree = "<absolute>"; };
 		5EE878AA1FA0E7D5006FC64B /* topping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = topping.cpp; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../topping.cpp"; sourceTree = "<absolute>"; };
 		5EE878AC1FA0EE89006FC64B /* item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = item.cpp; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../item.cpp"; sourceTree = "<absolute>"; };
+		5EE878AE1FA11055006FC64B /* login.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = login.cpp; path = ../../login.cpp; sourceTree = "<group>"; };
+		5EE878AF1FA11055006FC64B /* login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = login.h; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../login.h"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +80,8 @@
 		5EE878801F9FCCE3006FC64B /* MICE */ = {
 			isa = PBXGroup;
 			children = (
+				5EE878AE1FA11055006FC64B /* login.cpp */,
+				5EE878AF1FA11055006FC64B /* login.h */,
 				5EE878A91FA0E686006FC64B /* topping.h */,
 				5EE878971F9FE758006FC64B /* container.cpp */,
 				5EE878981F9FE758006FC64B /* container.h */,
@@ -156,6 +161,7 @@
 				5EE878A41F9FE758006FC64B /* Makefile in Sources */,
 				5EE878AB1FA0E7D5006FC64B /* topping.cpp in Sources */,
 				5EE878A31F9FE758006FC64B /* main.cpp in Sources */,
+				5EE878B01FA11055006FC64B /* login.cpp in Sources */,
 				5EE878A51F9FE758006FC64B /* order.cpp in Sources */,
 				5EE878A61F9FE758006FC64B /* scoop.cpp in Sources */,
 				5EE878A71F9FE758006FC64B /* serving.cpp in Sources */,
