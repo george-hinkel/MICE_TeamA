@@ -3,13 +3,18 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "item.h"
 
+<<<<<<< HEAD
 class Container
 {
+=======
+class Container : public Item{
+>>>>>>> b9c52d021dc5835ff2d8e89ca9c88bb79dcf2d10
   public:
-    std::vector<std::string> containers = {"Cone", "Cup", "Bowl"};
-    double price;
-    int howMany;
-    void addContainer();
+    Container(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="",int max_scoops=1);
+    std::string to_string();
+private:
+    int _max_scoops;
 };
 #endif /* container.h */

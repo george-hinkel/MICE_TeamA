@@ -1,8 +1,4 @@
 #include <iostream>
-#include "order.h"
-#include "serving.h"
-#include "scoop.h"
-#include "container.h"
 #include "login.h"
 
 void Login::verify()
@@ -11,8 +7,13 @@ void Login::verify()
   std::cout << "Enter username (manager): ";
   std::cin >> attemptUser;
   int choice;
+<<<<<<< HEAD
   Scoop scoop;
   Container container;
+=======
+  //Scoop scoop;
+  //Container container;
+>>>>>>> b9c52d021dc5835ff2d8e89ca9c88bb79dcf2d10
   
   if (attemptUser == userName)
   {
@@ -25,9 +26,9 @@ void Login::verify()
         std::cin >> choice;
         switch(choice)
         {
-          case 1: scoop.addFlavor();
+          case 1: //scoop.addFlavor();
   		break;
-          case 2: container.addContainer();
+          case 2: //container.addContainer();
 	  	break;
           default: std::cout << "Invalid" << std::endl;
         }
