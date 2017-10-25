@@ -5,6 +5,7 @@
 #include "scoop.h"
 #include "container.h"
 #include "topping.h"
+#include "login.h"
 
 int main(){
     Container container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10);
@@ -13,4 +14,7 @@ int main(){
     std::cout << container.to_string() << std::endl;
     std::cout << scoop.to_string() << std::endl;
     std::cout << topping.to_string() << std::endl;
+    Login login;
+    login.verify();
+    return 0;
 }
