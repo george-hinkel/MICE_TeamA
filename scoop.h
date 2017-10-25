@@ -5,12 +5,9 @@
 #include <iostream>
 #include <vector>
 
-class Scoop : public Item
-{
+class Scoop : public Item{
   public:
-    std::vector<std::string> flavors = {"Chocolate", "Vanilla", "Strawberry"};
-    void addFlavor();
-    void setPrice();
+    Scoop(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="");
     double getPrice();
 
   private:

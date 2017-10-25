@@ -8,9 +8,11 @@
 class Container : public Item
 {
   public:
-    std::vector<std::string> containers = {"Cone", "Cup", "Bowl"};
-    void addContainer();
+    Container(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="",int max_scoops=1);
+    std::string to_string();
+    //std::vector<std::string> containers = {"Cone", "Cup", "Bowl"}; //replaced with constructor
+    //void addContainer();
 private:
-    int max_scoops;
+    int _max_scoops;
 };
 #endif
