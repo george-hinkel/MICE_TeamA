@@ -17,6 +17,6 @@ int main()
   scoop.addFlavor();
   scoop.setPrice();
   std::cout << "$" << scoop.getPrice() << std::endl;
-*/  login login;
+*/  Login login;
   login.verify();
 }

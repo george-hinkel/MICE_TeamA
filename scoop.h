@@ -1,8 +1,10 @@
+#ifndef scoop_h
+#define scoop_h
 #include <string>
 #include <iostream>
 #include <vector>
 
-class scoop
+class Scoop
 {
   public:
     std::vector<std::string> flavors = {"Chocolate", "Vanilla", "Strawberry"};
@@ -13,4 +15,5 @@ class scoop
   private:
     double price;
 
-};
+}; 
+#endif /* scppp.h */

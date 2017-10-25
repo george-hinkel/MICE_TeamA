@@ -5,14 +5,14 @@
 #include "container.h"
 #include "login.h"
 
-void login::verify()
+void Login::verify()
 {
  do {
   std::cout << "Enter username (manager): ";
   std::cin >> attemptUser;
   int choice;
-  scoop scoop;
-  container container;
+  Scoop scoop;
+  Container container;
   
   if (attemptUser == userName)
   {

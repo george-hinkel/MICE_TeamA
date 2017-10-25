@@ -1,7 +1,7 @@
 #include <iostream>
 #include "scoop.h"
 
-void scoop::addFlavor()
+void Scoop::addFlavor()
 {
   std::string temp = "";
   std::cout << "Enter new flavor: ";
@@ -14,10 +14,10 @@ void scoop::addFlavor()
   std::cout << std::endl;
 }
 
-void scoop::setPrice()
+void Scoop::setPrice()
 {
   std::cout << "Enter price per scoop: $";
   std::cin >> price;
 }
 
-double scoop::getPrice(){return price;}
+double Scoop::getPrice(){return price;}

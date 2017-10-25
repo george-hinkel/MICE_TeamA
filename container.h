@@ -1,8 +1,10 @@
+#ifndef container_h
+#define container_h
 #include <string>
 #include <iostream>
 #include <vector>
 
-class container
+class Container
 {
   public:
     std::vector<std::string> containers = {"Cone", "Cup", "Bowl"};
@@ -10,3 +12,4 @@ class container
     int howMany;
     void addContainer();
 };
+#endif /* container.h */

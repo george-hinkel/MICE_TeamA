@@ -1,7 +1,7 @@
 #include <iostream>
 #include "container.h"
 
-void container::addContainer()
+void Container::addContainer()
 {
   std::string temp = "";
   std::cout << "Enter new container: ";
