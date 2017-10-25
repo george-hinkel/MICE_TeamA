@@ -1,7 +1,5 @@
 #ifndef serving_h
 #define serving_h
-#include "scoop.h"
-#include "container.h"
 #include <string>
 #include <iostream>
 
