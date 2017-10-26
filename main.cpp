@@ -1,11 +1,3 @@
-#include <iostream>
-#include "order.h"
-#include <string>
-#include "serving.h"
-#include "scoop.h"
-#include "container.h"
-#include "topping.h"
-#include "login.h"
 #include "main_window.h"
 #include "gtkmm.h"
 
@@ -28,6 +20,7 @@ int main()
 int main(){
 =======
 int main(int argc,char *argv[]){
+<<<<<<< HEAD
     /*
 >>>>>>> 67ff7da3c729250d9584f99ee07cf0afef6d2f54
     Container container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10);
@@ -44,6 +37,8 @@ int main(int argc,char *argv[]){
 =======
      */
     
+=======
+>>>>>>> 3a36f28d739b85a8f20a070d6bab977a52c6e2eb
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc,argv,"edu.uta.homework_06_glh");
     Main_window win;
     return app->run(win,argc,argv);
