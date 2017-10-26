@@ -1,45 +1,78 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
-
+#include <vector>
 #include <gtkmm.h>
-//#include "manager.h"
 
 class Main_window : public Gtk::Window{
     public:
         Main_window();
         virtual ~Main_window();
     protected:
-        void on_ap_click();  
-        void on_lp_click(); 
-        void on_cop_click();
-        void on_cip_click();
-        void on_apa_click();
-        void on_lpa_click();
-        void on_about_click();
+        void on_add_item_click();  
+        void on_hire_server_click(); 
+        void on_server_report_click();
+        void on_customer_report_click();
+        void on_inventory_report_click();
+        void on_order_report_click();
+        void on_create_serving_click();
+        void on_assemble_order_click();
+        void on_fill_order_click();
+        void on_checkout_order_click();
+        void on_cancel_order_click();
+        void on_run_test_click();
         void on_quit_click();
-        void on_gen_test_click();
-        void on_new_lib_click();
-        void on_enter_click();
     private:
     	int activeWindow=0;
-    	vector<Gtk::Entry *> entries;
-    	vector<Gtk::ComboBoxText *> cboxs;
-        void update_display();                    // Update display, robot move
-        //Manager _manager;                      // Current manager board
+    	std::vector<Gtk::Entry *> entries;
+    	std::vector<Gtk::ComboBoxText *> cboxs;
+        void update_display();                    // Update display
         Gtk::Box *vbox;
         Gtk::Box *displayBox;
         Glib::ustring tstring;
         Glib::ustring dstring;
-        Gtk::Label *display;                   // Display
-        Gtk::Label *msg;                      // Status message display
-        Gtk::ToolButton *button_ap;
+        Gtk::Label *display;  	// Display
+        Gtk::Label *msg;  		// Status message display
         
-        Gtk::ToolButton *button_lp;             // Button to list publication
-        Gtk::ToolButton *button_cop;             // Button to check out publication
-        Gtk::ToolButton *button_cip;             // Button to check in publication
-        Gtk::ToolButton *button_apa;             // Button to add patron
-        Gtk::ToolButton *button_lpa;  // Button to list patrons
-        Gtk::ToolButton *button_e;  // Button to cont prog
+        Gtk::ToolButton *button_add_item;
+        Gtk::ToolButton *button_hire_server;
+        Gtk::ToolButton *button_server_report;
+        Gtk::ToolButton *button_customer_report;
+        Gtk::ToolButton *button_inventory_report;
+        Gtk::ToolButton *button_order_report;
+        Gtk::ToolButton *button_create_serving;
+        Gtk::ToolButton *button_assemble_order;
+        Gtk::ToolButton *button_fill_order;
+        Gtk::ToolButton *button_checkout_order;
+        Gtk::ToolButton *button_cancel_order;
+        Gtk::ToolButton *button_run_test;
+        Gtk::ToolButton *quit_button;
+    
+    //menubar design
+    	Gtk::MenuBar *menubar;
+    		Gtk::MenuItem *menuitem_manager;
+    		Gtk::Menu *menu_manager;
+    			Gtk::MenuItem *menuitem_add_item;
+    			Gtk::MenuItem *menuitem_hire_server;
+    			Gtk::MenuItem *menuitem_reports;
+    			Gtk::Menu *menu_reports;
+    				Gtk::MenuItem *menuitem_server_report;
+    				Gtk::MenuItem *menuitem_customer_report;
+    				Gtk::MenuItem *menuitem_inventory_report;
+    				Gtk::MenuItem *menuitem_order_report;
+			Gtk::MenuItem *menuitem_server;
+			Gtk::Menu *menu_server;
+				Gtk::MenuItem *menuitem_s_create_serving;
+				Gtk::MenuItem *menuitem_s_assemble_order;
+				Gtk::MenuItem *menuitem_fill_order;
+				Gtk::MenuItem *menuitem_checkout_order;
+			Gtk::MenuItem *menuitem_customer;
+			Gtk::Menu *menu_customer;
+				Gtk::MenuItem *menuitem_c_create_serving;
+				Gtk::MenuItem *menuitem_c_assemble_order;
+				Gtk::MenuItem *menuitem_cancel_order;
+			Gtk::MenuItem *menuitem_test;
+			Gtk::Menu *menu_test;
+				Gtk::MenuItem *menuitem_run_test;
 };
 #endif 
 
