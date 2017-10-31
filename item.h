@@ -7,7 +7,10 @@ public:
     virtual std::string to_string();
     int get_stock_remaining();
     void modify_stock(int quantity_to_add);
+    std::string get_name();
+    std::string get_type();
 protected:
+	std::string _type;
     std::string _name;
     std::string _description;
     double _wholesale_cost;
