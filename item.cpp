@@ -12,3 +12,9 @@ std::string Item::to_string(){
     std::sprintf(output,"Name: %s\tWholesale Cost: %0.2lf\tRetail Price: %0.2lf\tStock Remaining: %d\nDescription: %s\n",_name.c_str(),_wholesale_cost,_retail_price,_stock_remaining,_description.c_str());
     return output;
 }
+std::string Item::get_name(){
+	return _name;
+}
+std::string Item::get_type(){
+	return _type;
+}
