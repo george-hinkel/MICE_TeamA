@@ -101,172 +101,187 @@ void Dialogs::image(string filename, string title, string msg) {
     return;
 }
 
-vector<string> Dialogs::input_publication(){
+Item* Dialogs::create_item(){
+	int item_type=-1;
+	item_type = question("Creating an item...","Decide which kind of item to create!",{"Scoop","Container","Topping"});
+	Item* item = (Item*)malloc(sizeof(Item));
 	vector<string> output;
 	Gtk::Dialog *dialog = new Gtk::Dialog();
-    dialog->set_title("Creating a publication...");
+    dialog->set_title("Creating a new item...");
     
     dialog->add_button("Cancel", 0);
     dialog->add_button("OK", 1);
     dialog->set_default_response(1);
     
-    //title entry
-    Gtk::HBox *titleB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*titleB);
-    titleB->set_homogeneous();
-    titleB->show();
+    //name entry
+    Gtk::HBox *nameB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*nameB);
+    nameB->set_homogeneous();
+    nameB->show();
     
-    Gtk::Label *titleP = new Gtk::Label("Title:");
-    titleB->pack_start(*titleP);
-    titleP->show();
+    Gtk::Label *nameP = new Gtk::Label("Name:");
+    nameB->pack_start(*nameP);
+    nameP->show();
     
-    Gtk::Entry *titleE = new Gtk::Entry{};
-    titleE->set_text("title");
-    titleE->set_max_length(50);
-    titleE->show();
-    titleB->pack_start(*titleE);
+    Gtk::Entry *nameE = new Gtk::Entry{};
+    nameE->set_text("name");
+    nameE->set_max_length(50);
+    nameE->show();
+    nameB->pack_start(*nameE);
     
-    //author entry
-    Gtk::HBox *authorB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*authorB);
-    authorB->set_homogeneous();
-    authorB->show();
+    //description entry
+    Gtk::HBox *descriptionB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*descriptionB);
+    descriptionB->set_homogeneous();
+    descriptionB->show();
     
-    Gtk::Label *authorP = new Gtk::Label("Author:");
-    authorB->pack_start(*authorP);
-    authorP->show();
+    Gtk::Label *descriptionP = new Gtk::Label("Description:");
+    descriptionB->pack_start(*descriptionP);
+    descriptionP->show();
     
-    Gtk::Entry *authorE = new Gtk::Entry{};
-    authorE->set_text("author");
-    authorE->set_max_length(50);
-    authorE->show();
-    authorB->pack_start(*authorE);
+    Gtk::Entry *descriptionE = new Gtk::Entry{};
+    descriptionE->set_text("description (max 300 characters)");
+    descriptionE->set_max_length(300);
+    descriptionE->show();
+    descriptionB->pack_start(*descriptionE);
     
-    //copyright entry
-    Gtk::HBox *copyrightB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*copyrightB);
-    copyrightB->set_homogeneous();
-    copyrightB->show();
+    //wholesale cost entry
+    Gtk::HBox *wholesale_costB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*wholesale_costB);
+    wholesale_costB->set_homogeneous();
+    wholesale_costB->show();
     
-    Gtk::Label *copyrightP = new Gtk::Label("Copyright:");
-    copyrightB->pack_start(*copyrightP);
-    copyrightP->show();
+    Gtk::Label *wholesale_costP = new Gtk::Label("Wholesale Cost:");
+    wholesale_costB->pack_start(*wholesale_costP);
+    wholesale_costP->show();
     
-    Gtk::Entry *copyrightE = new Gtk::Entry{};
-    copyrightE->set_text("copyright");
-    copyrightE->set_max_length(50);
-    copyrightE->show();
-    copyrightB->pack_start(*copyrightE);
+    Gtk::Entry *wholesale_costE = new Gtk::Entry{};
+    wholesale_costE->set_text("00.00");
+    wholesale_costE->set_max_length(50);
+    wholesale_costE->show();
+    wholesale_costB->pack_start(*wholesale_costE);
     
-    //genre entry
-    Gtk::HBox *genreB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*genreB);
-    genreB->set_homogeneous();
-    genreB->show();
+    //retail price entry
+    Gtk::HBox *retail_priceB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*retail_priceB);
+    retail_priceB->set_homogeneous();
+    retail_priceB->show();
     
-    Gtk::Label *genreP = new Gtk::Label("Genre:");
-    genreB->pack_start(*genreP);
-    genreP->show();
+    Gtk::Label *retail_priceP = new Gtk::Label("Retail Price:");
+    retail_priceB->pack_start(*retail_priceP);
+    retail_priceP->show();
     
-    Gtk::ComboBoxText *genreC = new Gtk::ComboBoxText();
-    genreC->append("0","Fiction");
-    genreC->append("1","Non-Fiction");
-    genreC->append("2","Self-Help");
-    genreC->append("3","Performance");
-    genreC->show();
-    genreB->pack_start(*genreC);
+    Gtk::Entry *retail_priceE = new Gtk::Entry{};
+    retail_priceE->set_text("00.00");
+    retail_priceE->set_max_length(50);
+    retail_priceE->show();
+    retail_priceB->pack_start(*retail_priceE);
     
-    //media entry
-    Gtk::HBox *mediaB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*mediaB);
-    mediaB->set_homogeneous();
-    mediaB->show();
+    //initial stock entry
+    Gtk::HBox *initial_stockB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*initial_stockB);
+    initial_stockB->set_homogeneous();
+    initial_stockB->show();
     
-    Gtk::Label *mediaP = new Gtk::Label("Media:");
-    mediaB->pack_start(*mediaP);
-    mediaP->show();
+    Gtk::Label *initial_stockP = new Gtk::Label("Initial Stock:");
+    initial_stockB->pack_start(*initial_stockP);
+    initial_stockP->show();
     
-    Gtk::ComboBoxText *mediaC = new Gtk::ComboBoxText();
-    mediaC->append("0","Book");
-    mediaC->append("1","Periodical");
-    mediaC->append("2","Newspaper");
-    mediaC->append("3","Audio");
-    mediaC->append("4","Video");
-    mediaC->show();
-    mediaB->pack_start(*mediaC);
+    Gtk::Entry *initial_stockE = new Gtk::Entry{};
+    initial_stockE->set_text("00");
+    initial_stockE->set_max_length(50);
+    initial_stockE->show();
+    initial_stockB->pack_start(*initial_stockE);
     
-    //target_age entry
-    Gtk::HBox *target_ageB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*target_ageB);
-    target_ageB->set_homogeneous();
-    target_ageB->show();
+    //max scoops entry
+    Gtk::HBox *max_scoopsB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*max_scoopsB);
+    max_scoopsB->set_homogeneous();
     
-    Gtk::Label *target_ageP = new Gtk::Label("Target Age:");
-    target_ageB->pack_start(*target_ageP);
-    target_ageP->show();
+    Gtk::Label *max_scoopsP = new Gtk::Label("Max Scoops:");
+    max_scoopsB->pack_start(*max_scoopsP);
     
-    Gtk::ComboBoxText *target_ageC = new Gtk::ComboBoxText();
-    target_ageC->append("0","Children");
-    target_ageC->append("1","Teen");
-    target_ageC->append("2","Adult");
-    target_ageC->append("3","Restricted");
-    target_ageC->show();
-    target_ageB->pack_start(*target_ageC);
+    Gtk::Entry *max_scoopsE = new Gtk::Entry{};
+    max_scoopsE->set_text("0");
+    max_scoopsE->set_max_length(50);
+    max_scoopsB->pack_start(*max_scoopsE);
     
-    //isbn entry
-    Gtk::HBox *isbnB = new Gtk::HBox();
-    dialog->get_vbox()->pack_start(*isbnB);
-    isbnB->set_homogeneous();
-    isbnB->show();
+    if(item_type==1){
+    	max_scoopsB->show();
+    	max_scoopsP->show();
+    	max_scoopsE->show();
+    }
     
-    Gtk::Label *isbnP = new Gtk::Label("ISBN: ");
-    isbnB->pack_start(*isbnP);
-    isbnP->show();
+    //quantifier entry
+    Gtk::HBox *quantifierB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*quantifierB);
+    quantifierB->set_homogeneous();
     
-    Gtk::Entry *isbnE = new Gtk::Entry{};
-    isbnE->set_text("isbn");
-    isbnE->set_max_length(50);
-    isbnE->show();
-    isbnB->pack_start(*isbnE);
+    Gtk::Label *quantifierP = new Gtk::Label("Amount Qualifier:");
+    quantifierB->pack_start(*quantifierP);
     
+    Gtk::ComboBoxText *quantifierC = new Gtk::ComboBoxText();
+    quantifierC->append("0","light");
+    quantifierC->append("1","normal");
+    quantifierC->append("2","extra");
+    quantifierC->append("3","drenched");
+    quantifierB->pack_start(*quantifierC);
+    
+    if(item_type==2){    
+    	quantifierB->show();
+    	quantifierP->show();
+    	quantifierC->show();
+    }
     
     int result = dialog->run();
-    output.push_back(titleE->get_text());
-    output.push_back(authorE->get_text());
-    output.push_back(copyrightE->get_text());
-    output.push_back(genreC->get_active_id());
-    output.push_back(mediaC->get_active_id());
-    output.push_back(target_ageC->get_active_id());
-    output.push_back(isbnE->get_text());
-    
+    output.push_back(nameE->get_text());
+    output.push_back(descriptionE->get_text());
+    output.push_back(wholesale_costE->get_text());
+    output.push_back(retail_priceE->get_text());
+    output.push_back(initial_stockE->get_text());
+    if(item_type==1)
+    output.push_back(max_scoopsE->get_text());
+    if(item_type==2)
+    output.push_back(quantifierC->get_active_id());
     dialog->close();
     while (Gtk::Main::events_pending())  Gtk::Main::iteration();
 
-    delete titleP;
-    delete titleE;
-    delete titleB;
-    delete authorP;
-    delete authorE;
-    delete authorB;
-    delete copyrightP;
-    delete copyrightE;
-    delete copyrightB;
-    delete genreP;
-    delete genreC;
-    delete genreB;
-    delete mediaP;
-    delete mediaC;
-    delete mediaB;
-    delete target_ageP;
-    delete target_ageC;
-    delete target_ageB;
-    delete isbnP;
-    delete isbnE;
-    delete isbnB;
+    delete nameP;
+    delete nameE;
+    delete nameB;
+    delete descriptionP;
+    delete descriptionE;
+    delete descriptionB;
+    delete wholesale_costP;
+    delete wholesale_costE;
+    delete wholesale_costB;
+    delete retail_priceP;
+    delete retail_priceE;
+    delete retail_priceB;
+    delete initial_stockP;
+    delete initial_stockE;
+    delete initial_stockB;
+    delete max_scoopsP;
+    delete max_scoopsE;
+    delete max_scoopsB;
+    delete quantifierP;
+    delete quantifierC;
+    delete quantifierB;
     delete dialog;
-
+	
+	switch(item_type){
+		case 0: item = new Scoop(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]));
+			break;
+		case 1: item = new Mice::Container(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),"",stoi(output[5]));
+			break;
+		case 2: item = new Topping(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),"",stoi(output[5]));
+			break;
+		default: item = new Item("NULL","NULL",0,0,0);
+			break;
+	}
+	
     if (result == 1)
-        return output;
+        return item;
     else
-        return output;
+        return item;
 }

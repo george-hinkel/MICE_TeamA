@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <gtkmm.h>
-
+#include "mice.h"
 using namespace std;
 
 class Dialogs {
@@ -25,5 +25,7 @@ class Dialogs {
     
     //request for string of vectors representing a publication
     static vector<string> input_publication();
+    
+    static Item* create_item();
 };
 #endif

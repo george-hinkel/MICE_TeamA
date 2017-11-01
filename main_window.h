@@ -2,10 +2,13 @@
 #define MAIN_WINDOW_H
 #include <vector>
 #include <gtkmm.h>
-
+#include "data_library.h"
+#include "mice.h"
+#include "login.h"
+#include "dialogs.h"
 class Main_window : public Gtk::Window{
     public:
-        Main_window();
+        Main_window(Data_library* data_library);
         virtual ~Main_window();
     protected:
         void on_add_item_click();  
@@ -22,6 +25,8 @@ class Main_window : public Gtk::Window{
         void on_run_test_click();
         void on_quit_click();
     private:
+    	Data_library* _data_library;
+    
     	int activeWindow=0;
     	std::vector<Gtk::Entry *> entries;
     	std::vector<Gtk::ComboBoxText *> cboxs;

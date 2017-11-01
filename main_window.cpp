@@ -1,9 +1,8 @@
 #include "main_window.h"
-#include "mice.h"
 using std::vector;
 using std::string;
 
-Main_window::Main_window(){
+Main_window::Main_window(Data_library* data_library) : _data_library{data_library} {
 
     // /////////////////
     // G U I   S E T U P
@@ -240,7 +239,9 @@ Main_window::~Main_window() { }
 // C A L L B A C K S
 // /////////////////
 
-void Main_window::on_add_item_click(){}
+void Main_window::on_add_item_click(){
+	_data_library->add_item(Dialogs::create_item());
+}
 void Main_window::on_hire_server_click(){}
 void Main_window::on_server_report_click(){}
 void Main_window::on_customer_report_click(){}

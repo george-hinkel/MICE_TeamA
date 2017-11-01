@@ -19,12 +19,17 @@ Item* Serving::get_item(std::string name){
 	return null_item;
 }
 void Serving::remove_item(Item* item){
-	int index=0;
+	int index=-1;
 	for(int i=0;i<_items.size();i++){
 		if(_items[i]==item){
 			index=i;
 		}
 	}
-	_items.erase(_items.begin()+index);
+	if(index!=-1){
+		_items.erase(_items.begin()+index);
+	}
+}
+std::string Serving::get_id(){
+	return _serving_id;
 }
 std::string Serving::to_string(){}
