@@ -1,10 +1,6 @@
 #include <iostream>
 #include "order.h"
 
-void Order::getMessage(std::string mess)
-{
-  std::cout << mess << std::endl;
-}
 void Order::add_serving(Serving* serving){
 	_servings.push_back(serving);
 }

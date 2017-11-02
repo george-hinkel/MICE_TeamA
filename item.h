@@ -1,6 +1,7 @@
 #ifndef item_h
 #define item_h
 #include <string>
+
 class Item{
 public:
     Item(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="") : _name{name},_description{description},_wholesale_cost{wholesale_cost},_retail_price{retail_price},_stock_remaining{initial_stock},_image_file_path{image_file_path} { }
@@ -9,6 +10,7 @@ public:
     void modify_stock(int quantity_to_add);
     std::string get_name();
     std::string get_type();
+    virtual double get_price();
 protected:
 	std::string _type;
     std::string _name;

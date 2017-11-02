@@ -1,10 +1,5 @@
-#include <iostream>
 #include "serving.h"
-
-void Serving::getMessage(std::string mess)
-{
-  std::cout << mess << std::endl;
-}
+#include <iostream>
 void Serving::add_item(Item* item){
 	_items.push_back(item);
 }
@@ -32,4 +27,15 @@ void Serving::remove_item(Item* item){
 std::string Serving::get_id(){
 	return _serving_id;
 }
-std::string Serving::to_string(){}
+std::string Serving::to_string(){
+	std::string output="Serving #";
+	output+= _serving_id;
+	output+= "\n";
+	for(int i=0;i<_items.size();i++){
+		output+= "item #";
+		output+= std::to_string(i+1);
+		output+= "\t";
+		output+= _items[i]->to_string();
+	}
+	return output;
+}
