@@ -1,6 +1,8 @@
 #include "item.h"
 #include <string>
 #include <cstdio>
+#include <iostream>
+
 int Item::get_stock_remaining(){
     return _stock_remaining;
 }
@@ -17,4 +19,7 @@ std::string Item::get_name(){
 }
 std::string Item::get_type(){
 	return _type;
+}
+double Item::get_price(){
+	return _retail_price;
 }

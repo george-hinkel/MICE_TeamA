@@ -241,13 +241,52 @@ Main_window::~Main_window() { }
 
 void Main_window::on_add_item_click(){
 	_data_library->add_item(Dialogs::create_item());
+	dstring=_data_library->list_items(0);
+	update_display();
 }
 void Main_window::on_hire_server_click(){}
 void Main_window::on_server_report_click(){}
 void Main_window::on_customer_report_click(){}
 void Main_window::on_inventory_report_click(){}
 void Main_window::on_order_report_click(){}
-void Main_window::on_create_serving_click(){}
+void Main_window::on_create_serving_click(){
+	std::vector<Item*> temp;
+	std::vector<std::string> temps;
+	int index;
+	int number;
+	std::vector<std::string> qualifiers = {"light","normal","extra","drenched"};
+	Item* tempitem;
+	
+	//add a container
+	temp = _data_library->get_items_vector(1);
+	temps= _data_library->get_item_names_vector(1);
+	index = Dialogs::question(_data_library->list_items(1),"Choose a container",temps);
+	_data_library->create_item_instance(temp[index]);
+	
+	//add 1-N scoops
+	temp = _data_library->get_items_vector(2);
+	temps= _data_library->get_item_names_vector(2);
+	number=stoi(Dialogs::input("How many scoops would you like?","Choose number of scoops","1","1"));
+	for(int i=0;i<number;i++){
+		index = Dialogs::question(_data_library->list_items(2),"Choose a scoop",temps);
+		_data_library->create_item_instance(temp[index]);
+	}
+	
+	//add 0-N toppings
+	temp = _data_library->get_items_vector(3);
+	temps= _data_library->get_item_names_vector(3);
+	number=stoi(Dialogs::input("How many toppings would you like?","Choose number of toppings","0","0"));
+	for(int i=0;i<number;i++){
+		index = Dialogs::question(_data_library->list_items(2),"Choose a topping",temps);
+		tempitem=_data_library->create_item_instance(temp[index]);
+		static_cast<Topping*>(tempitem)->change_quantifier(Dialogs::question("Choose topping intensity","Choose a topping",qualifiers));
+	}
+	
+	_data_library->assemble_serving();
+	
+	dstring=_data_library->list_servings();
+	update_display();
+}
 void Main_window::on_assemble_order_click(){}
 void Main_window::on_fill_order_click(){}
 void Main_window::on_checkout_order_click(){}
@@ -257,7 +296,14 @@ void Main_window::on_run_test_click(){
 	Mice::Container container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10);
     Scoop scoop("Vanilla","Delicious homemade vanilla ice cream scoop",0.8,1.5,10);
     Topping topping("Chocolate Syrup","Rich 100% milk chocolate syrup",0.1,0.25,10);
-    dstring = container.to_string()+scoop.to_string()+topping.to_string();
+    _data_library->add_item(&container);
+    _data_library->add_item(&scoop);
+    _data_library->add_item(&topping);
+    _data_library->create_item_instance(&container);
+    _data_library->create_item_instance(&scoop);
+    _data_library->create_item_instance(&topping);
+    _data_library->assemble_serving();
+    dstring = _data_library->list_servings();
     Login login;
     update_display();
 }

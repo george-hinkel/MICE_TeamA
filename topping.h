@@ -3,10 +3,13 @@
 #include <vector>
 #include <string>
 #include "item.h"
+
 class Topping : public Item{
 public:
     Topping(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="",int quantifier=1);
     std::string to_string();
+    void change_quantifier(int quantifier);
+    double get_price();
 private:
     int _quantifier;
     std::string _qualifiers[4] = {"light","normal","extra","drenched"};
