@@ -16,7 +16,7 @@ User* Data_library::get_user(std::string username){
 		}
 	}
 	User* null_user = (User*)malloc(sizeof(User));
-	null_user = new User("NULL","NULL","NULL","NULL");
+	null_user = new User("NULL","NULL","NULL");
 	return null_user;
 }
 std::string Data_library::list_users(){

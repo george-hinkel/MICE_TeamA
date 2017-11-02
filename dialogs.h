@@ -27,5 +27,8 @@ class Dialogs {
     static vector<string> input_publication();
     
     static Item* create_item();
+    
+    static User* create_user(int user_type); 
+    	//0=customer;1=server;2=manager
 };
 #endif

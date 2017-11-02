@@ -1,5 +1,5 @@
 #include "user.h"
-User::User(std::string username,std::string password,std::string name,std::string id) : _username{username},_password{password},_name{name},_id{id} { }
+User::User(std::string username,std::string password,std::string name) : _username{username},_password{password},_name{name} { }
 bool User::is_password(std::string password_attempt){
     if(password_attempt==_password){
         return true;

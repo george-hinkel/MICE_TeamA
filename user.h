@@ -3,7 +3,7 @@
 #include <string>
 class User{
 public:
-    User(std::string username,std::string password,std::string name,std::string id);
+    User(std::string username,std::string password,std::string name);
     bool is_password(std::string password_attempt);
     std::string get_username();
     void change_username(User &admin,std::string username);

@@ -8,6 +8,7 @@ Menu
 			Inventory Report
 			Order Report
 	Server
+		Register Customer
 		Create Serving
 		Assemble Order
 		Fill Order

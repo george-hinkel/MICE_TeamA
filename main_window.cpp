@@ -67,6 +67,11 @@ Main_window::Main_window(Data_library* data_library) : _data_library{data_librar
     menu_server = Gtk::manage(new Gtk::Menu());
     menuitem_server->set_submenu(*menu_server);
     
+    //				R E G I S T E R   C U S T O M E R
+    menuitem_register_customer = Gtk::manage(new Gtk::MenuItem("_Register New Customer", true));
+    menuitem_register_customer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_register_customer_click));
+    menu_server->append(*menuitem_register_customer);
+    
 	//				C R E A T E   S E R V I N G
     menuitem_s_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_s_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
@@ -249,7 +254,11 @@ void Main_window::on_add_item_click(){
 	dstring=_data_library->list_items(0);
 	update_display();
 }
-void Main_window::on_hire_server_click(){}
+void Main_window::on_hire_server_click(){
+	_data_library->add_user(Dialogs::create_user(1));
+	dstring=_data_library->list_users();
+	update_display();
+}
 void Main_window::on_server_report_click(){}
 void Main_window::on_customer_report_click(){}
 void Main_window::on_inventory_report_click(){}
@@ -327,7 +336,11 @@ void Main_window::on_verify_serving_click(){
 		on_create_serving_click();
 	}
 }
-
+void Main_window::on_register_customer_click(){
+	_data_library->add_user(Dialogs::create_user(0));
+	dstring=_data_library->list_users();
+	update_display();
+}
 
 // /////////////////
 // U T I L I T I E S
