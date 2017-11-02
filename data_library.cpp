@@ -125,13 +125,6 @@ Item* Data_library::create_item_instance(Item* item){
 	_item_instances.push_back(instance);
 	return instance;
 }
-Serving* Data_library::create_unassigned_serving(){
-	Serving* serving = (Serving*)malloc(sizeof(Serving));
-	serving = new Serving(std::to_string(_next_serving_id));
-	_unassigned_servings.push_back(serving);
-	_next_serving_id++;
-	return serving;
-}
 std::string Data_library::list_servings(){
 	std::string output="";
 	for(int i=0;i<_unassigned_servings.size();i++){
@@ -156,8 +149,19 @@ void Data_library::assemble_serving(){
 	_next_serving_id++;
 	for(int i=0;i<_item_instances.size();i++){
 		serving->add_item(_item_instances[i]);
-		//free(_item_instances[i]);
 	}
 	_item_instances.clear();
+}
+void Data_library::delete_serving(Serving* serving){
+	int index=-1;
+	for(int i=0;i<_unassigned_servings.size();i++){
+		if(_unassigned_servings[i]==serving){
+			index=i;
+		}
+	}
+	if(index!=-1){
+		_unassigned_servings.erase(_unassigned_servings.begin()+index);
+		//free(serving);
+	}
 }
 void Data_library::assemble_order(std::vector<int> serving_indexes){}

@@ -24,6 +24,7 @@ class Main_window : public Gtk::Window{
         void on_cancel_order_click();
         void on_run_test_click();
         void on_quit_click();
+        void on_verify_serving_click();
     private:
     	Data_library* _data_library;
     
@@ -73,6 +74,7 @@ class Main_window : public Gtk::Window{
 			Gtk::MenuItem *menuitem_customer;
 			Gtk::Menu *menu_customer;
 				Gtk::MenuItem *menuitem_c_create_serving;
+				Gtk::MenuItem *menuitem_verify_serving;
 				Gtk::MenuItem *menuitem_c_assemble_order;
 				Gtk::MenuItem *menuitem_cancel_order;
 			Gtk::MenuItem *menuitem_test;

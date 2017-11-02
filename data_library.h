@@ -17,10 +17,10 @@ public:
     std::vector<Item*> get_items_vector(int op);//same as above
     std::vector<std::string> get_item_names_vector(int op);//same as above
     Item* create_item_instance(Item* item);
-    Serving* create_unassigned_serving();
     std::string list_servings();
     Serving* get_serving(std::string serving_id);
     void assemble_serving();
+    void delete_serving(Serving* serving);
     void assemble_order(std::vector<int> serving_indexes);
 private:
     std::vector<Item*> _items;

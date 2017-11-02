@@ -14,6 +14,7 @@ Menu
 		Checkout Order
 	Customer
 		Create Serving
+		Verify Serving
 		Assemble Order
 		Cancel Order
 	Test
