@@ -1,6 +1,7 @@
 #include <iostream>
 #include "scoop.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 void Scoop::addFlavor()
 {
@@ -25,3 +26,8 @@ double Scoop::getPrice(){return price;}
 =======
 Scoop::Scoop(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path) : Item(name,description,wholesale_cost,retail_price,initial_stock,image_file_path){ }
 >>>>>>> b9c52d021dc5835ff2d8e89ca9c88bb79dcf2d10
+=======
+Scoop::Scoop(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path) : Item(name,description,wholesale_cost,retail_price,initial_stock,image_file_path){
+	_type="scoop";
+}
+>>>>>>> 99485964cefeba60fd572ae72b616c706c9cf755

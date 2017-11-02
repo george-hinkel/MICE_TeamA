@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E6695DA1FA26DC300FF4641 /* user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6695D81FA26DC300FF4641 /* user.cpp */; };
+		5E6695E01FA2784300FF4641 /* data_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6695DF1FA2784300FF4641 /* data_library.cpp */; };
 		5EE878A21F9FE758006FC64B /* container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE878971F9FE758006FC64B /* container.cpp */; };
 		5EE878A31F9FE758006FC64B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE8789A1F9FE758006FC64B /* main.cpp */; };
 		5EE878A41F9FE758006FC64B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5EE8789B1F9FE758006FC64B /* Makefile */; };
@@ -32,6 +34,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5E6695D71FA26D6100FF4641 /* mice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mice.h; path = ../../mice.h; sourceTree = "<group>"; };
+		5E6695D81FA26DC300FF4641 /* user.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = user.cpp; path = ../../user.cpp; sourceTree = "<group>"; };
+		5E6695DB1FA26DF000FF4641 /* user.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = user.h; path = ../../user.h; sourceTree = "<group>"; };
+		5E6695DD1FA2732D00FF4641 /* model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = model.h; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/../model.h"; sourceTree = "<absolute>"; };
+		5E6695DE1FA2764700FF4641 /* data_library.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = data_library.h; path = ../../data_library.h; sourceTree = "<group>"; };
+		5E6695DF1FA2784300FF4641 /* data_library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_library.cpp; path = ../../data_library.cpp; sourceTree = "<group>"; };
 		5EE8787E1F9FCCE3006FC64B /* MICE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MICE; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EE878971F9FE758006FC64B /* container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = container.cpp; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../container.cpp"; sourceTree = "<absolute>"; };
 		5EE878981F9FE758006FC64B /* container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = container.h; path = "/Users/George/Documents/UTA/Classes/CSE 1325/MICE_TeamA/MICE/MICE/../../container.h"; sourceTree = "<absolute>"; };
@@ -83,7 +91,13 @@
 		5EE878801F9FCCE3006FC64B /* MICE */ = {
 			isa = PBXGroup;
 			children = (
+				5E6695DD1FA2732D00FF4641 /* model.h */,
+				5E6695DE1FA2764700FF4641 /* data_library.h */,
+				5E6695DF1FA2784300FF4641 /* data_library.cpp */,
+				5E6695D71FA26D6100FF4641 /* mice.h */,
 				5EE878B11FA1153D006FC64B /* main_window.cpp */,
+				5E6695D81FA26DC300FF4641 /* user.cpp */,
+				5E6695DB1FA26DF000FF4641 /* user.h */,
 				5EE878B21FA1153D006FC64B /* main_window.h */,
 				5EE878AE1FA11055006FC64B /* login.cpp */,
 				5EE878AF1FA11055006FC64B /* login.h */,
@@ -165,12 +179,14 @@
 				5EE878AD1FA0EE89006FC64B /* item.cpp in Sources */,
 				5EE878A41F9FE758006FC64B /* Makefile in Sources */,
 				5EE878B31FA1153D006FC64B /* main_window.cpp in Sources */,
+				5E6695E01FA2784300FF4641 /* data_library.cpp in Sources */,
 				5EE878AB1FA0E7D5006FC64B /* topping.cpp in Sources */,
 				5EE878A31F9FE758006FC64B /* main.cpp in Sources */,
 				5EE878B01FA11055006FC64B /* login.cpp in Sources */,
 				5EE878A51F9FE758006FC64B /* order.cpp in Sources */,
 				5EE878A61F9FE758006FC64B /* scoop.cpp in Sources */,
 				5EE878A71F9FE758006FC64B /* serving.cpp in Sources */,
+				5E6695DA1FA26DC300FF4641 /* user.cpp in Sources */,
 				5EE878A21F9FE758006FC64B /* container.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
