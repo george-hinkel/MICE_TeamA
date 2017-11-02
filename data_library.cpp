@@ -9,10 +9,26 @@ void Data_library::write_out_data(){}
 void Data_library::add_user(User* user){
 	_users.push_back(user);
 }
+User* Data_library::get_user(std::string username){
+	for(int i=0;i<_users.size();i++){
+		if(_users[i]->get_username()==username){
+			return _users[i];
+		}
+	}
+	User* null_user = (User*)malloc(sizeof(User));
+	null_user = new User("NULL","NULL","NULL","NULL");
+	return null_user;
+}
+std::string Data_library::list_users(){
+	std::string output="";
+	for(int i=0;i<_users.size();i++){
+		output+=_users[i]->to_string();
+	}
+	return output;
+}
 void Data_library::add_item(Item* item){
 	_items.push_back(item);
 }
-User* Data_library::get_user(std::string username){}
 Item* Data_library::get_item(std::string name){
 	for(int i=0;i<_items.size();i++){
 		if(_items[i]->get_name()==name){

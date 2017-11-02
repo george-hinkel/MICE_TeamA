@@ -8,8 +8,8 @@ debug: main
 
 rebuild: clean main
 
-main: main.o main_window.o data_library.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o login.o
-	$(CXX) $(CXXFLAGS) -o main main.o main_window.o data_library.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o login.o `pkg-config gtkmm-3.0 --cflags --libs`
+main: main.o main_window.o data_library.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o login.o user.o customer.o server.o manager.o
+	$(CXX) $(CXXFLAGS) -o main main.o main_window.o data_library.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o user.o customer.o server.o manager.o login.o `pkg-config gtkmm-3.0 --cflags --libs`
 	./main
 main.o: main.cpp order.h order.h serving.h scoop.h container.h topping.h login.h main_window.h
 	$(CXX) $(CXXFLAGS) -c main.cpp `pkg-config gtkmm-3.0 --cflags --libs`
@@ -32,6 +32,16 @@ container.o: container.cpp container.h
 item.o: item.cpp item.h
 	$(CXX) $(CXXFLAGS) -c item.cpp
 
+#user objects
+user.o: user.cpp user.h
+	$(CXX) $(CXXFLAGS) -c user.cpp
+customer.o: customer.cpp customer.h
+	$(CXX) $(CXXFLAGS) -c customer.cpp
+server.o: server.cpp server.h
+	$(CXX) $(CXXFLAGS) -c server.cpp
+manager.o: manager.cpp manager.h
+	$(CXX) $(CXXFLAGS) -c manager.cpp
+	
 data_library.o: data_library.cpp data_library.h
 	$(CXX) $(CXXFLAGS) -c data_library.cpp
 login.o: login.cpp login.h
