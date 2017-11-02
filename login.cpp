@@ -7,13 +7,8 @@ void Login::verify()
   std::cout << "Enter username (manager): ";
   std::cin >> attemptUser;
   int choice;
-<<<<<<< HEAD
-  Scoop scoop;
-  Container container;
-=======
   //Scoop scoop;
   //Container container;
->>>>>>> b9c52d021dc5835ff2d8e89ca9c88bb79dcf2d10
   
   if (attemptUser == userName)
   {
