@@ -285,3 +285,167 @@ Item* Dialogs::create_item(){
     else
         return item;
 }
+User* Dialogs::create_user(int user_type){
+	User* user = (User*)malloc(sizeof(User));
+	vector<string> output;
+	Gtk::Dialog *dialog = new Gtk::Dialog();
+    dialog->set_title("Creating a new user...");
+    
+    dialog->add_button("Cancel", 0);
+    dialog->add_button("OK", 1);
+    dialog->set_default_response(1);
+    
+    //username entry
+    Gtk::HBox *usernameB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*usernameB);
+    usernameB->set_homogeneous();
+    usernameB->show();
+    
+    Gtk::Label *usernameP = new Gtk::Label("Username:");
+    usernameB->pack_start(*usernameP);
+    usernameP->show();
+    
+    Gtk::Entry *usernameE = new Gtk::Entry{};
+    usernameE->set_text("username");
+    usernameE->set_max_length(50);
+    usernameE->show();
+    usernameB->pack_start(*usernameE);
+    
+    //password entry
+    Gtk::HBox *passwordB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*passwordB);
+    passwordB->set_homogeneous();
+    passwordB->show();
+    
+    Gtk::Label *passwordP = new Gtk::Label("Password:");
+    passwordB->pack_start(*passwordP);
+    passwordP->show();
+    
+    Gtk::Entry *passwordE = new Gtk::Entry{};
+    passwordE->set_text("password");
+    passwordE->set_max_length(50);
+    passwordE->show();
+    passwordB->pack_start(*passwordE);
+    
+    //name entry
+    Gtk::HBox *nameB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*nameB);
+    nameB->set_homogeneous();
+    nameB->show();
+    
+    Gtk::Label *nameP = new Gtk::Label("Name:");
+    nameB->pack_start(*nameP);
+    nameP->show();
+    
+    Gtk::Entry *nameE = new Gtk::Entry{};
+    nameE->set_text("name");
+    nameE->set_max_length(50);
+    nameE->show();
+    nameB->pack_start(*nameE);
+  
+    //phone number entry
+    Gtk::HBox *phone_numberB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*phone_numberB);
+    phone_numberB->set_homogeneous();
+    
+    Gtk::Label *phone_numberP = new Gtk::Label("Phone number:");
+    phone_numberB->pack_start(*phone_numberP);
+    
+    Gtk::Entry *phone_numberE = new Gtk::Entry{};
+    phone_numberE->set_text("555-555-5555");
+    phone_numberE->set_max_length(50);
+    phone_numberB->pack_start(*phone_numberE);
+    
+    if(user_type==0){
+    	phone_numberB->show();    
+    	phone_numberP->show();
+    	phone_numberE->show();
+    }
+    
+    //all time orders filled entry
+    Gtk::HBox *atofB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*atofB);
+    atofB->set_homogeneous();
+    
+    Gtk::Label *atofP = new Gtk::Label("All time orders filled:");
+    atofB->pack_start(*atofP);
+    
+    Gtk::Entry *atofE = new Gtk::Entry{};
+    atofE->set_text("100");
+    atofE->set_max_length(50);
+    atofB->pack_start(*atofE);
+    
+    if(user_type==1){
+    	atofB->show();
+    	atofP->show();
+    	atofE->show();
+    }
+                
+    //hourly wage entry
+    Gtk::HBox *hourly_wageB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*hourly_wageB);
+    hourly_wageB->set_homogeneous();
+    
+    Gtk::Label *hourly_wageP = new Gtk::Label("Hourly wage:");
+    hourly_wageB->pack_start(*hourly_wageP);
+    
+    Gtk::Entry *hourly_wageE = new Gtk::Entry{};
+    hourly_wageE->set_text("8.25");
+    hourly_wageE->set_max_length(50);
+    hourly_wageB->pack_start(*hourly_wageE);
+    
+    if(user_type==1){
+    	hourly_wageB->show();
+    	hourly_wageP->show();
+    	hourly_wageE->show();
+    }
+    
+    int result = dialog->run();
+    output.push_back(usernameE->get_text());
+    output.push_back(passwordE->get_text());
+    output.push_back(nameE->get_text());
+    if(user_type==0){
+    	output.push_back(phone_numberE->get_text());
+    }else if(user_type==1){
+    	output.push_back(atofE->get_text());
+    	output.push_back(hourly_wageE->get_text());
+    }
+    dialog->close();
+    while (Gtk::Main::events_pending())  Gtk::Main::iteration();
+
+    delete usernameP;
+    delete usernameE;
+    delete usernameB;
+    delete passwordP;
+    delete passwordE;
+    delete passwordB;
+    delete nameP;
+    delete nameE;
+    delete nameB;
+    delete phone_numberP;
+    delete phone_numberE;
+    delete phone_numberB;
+    delete atofP;
+    delete atofE;
+    delete atofB;
+    delete hourly_wageP;
+    delete hourly_wageE;
+    delete hourly_wageB;
+    delete dialog;
+	
+	switch(user_type){
+		case 0: user = new Customer(output[0],output[1],output[2],output[3]);
+			break;
+		case 1: user = new Server(output[0],output[1],output[2],stoi(output[3]),stod(output[4]));
+			break;
+		case 2: user = new Manager(output[0],output[1],output[2]);
+			break;
+		default: user = new User("NULL","NULL","NULL");
+			break;
+	}
+	
+    if (result == 1)
+        return user;
+    else
+        return user;
+}

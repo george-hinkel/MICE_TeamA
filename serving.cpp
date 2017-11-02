@@ -28,7 +28,7 @@ std::string Serving::get_id(){
 	return _serving_id;
 }
 std::string Serving::to_string(){
-	std::string output="Serving #";
+	std::string output="Serving ID:";
 	output+= _serving_id;
 	output+= "\n";
 	for(int i=0;i<_items.size();i++){

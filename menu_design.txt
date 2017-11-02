@@ -8,12 +8,14 @@ Menu
 			Inventory Report
 			Order Report
 	Server
+		Register Customer
 		Create Serving
 		Assemble Order
 		Fill Order
 		Checkout Order
 	Customer
 		Create Serving
+		Verify Serving
 		Assemble Order
 		Cancel Order
 	Test

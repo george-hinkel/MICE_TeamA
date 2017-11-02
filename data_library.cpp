@@ -9,10 +9,26 @@ void Data_library::write_out_data(){}
 void Data_library::add_user(User* user){
 	_users.push_back(user);
 }
+User* Data_library::get_user(std::string username){
+	for(int i=0;i<_users.size();i++){
+		if(_users[i]->get_username()==username){
+			return _users[i];
+		}
+	}
+	User* null_user = (User*)malloc(sizeof(User));
+	null_user = new User("NULL","NULL","NULL");
+	return null_user;
+}
+std::string Data_library::list_users(){
+	std::string output="";
+	for(int i=0;i<_users.size();i++){
+		output+=_users[i]->to_string();
+	}
+	return output;
+}
 void Data_library::add_item(Item* item){
 	_items.push_back(item);
 }
-User* Data_library::get_user(std::string username){}
 Item* Data_library::get_item(std::string name){
 	for(int i=0;i<_items.size();i++){
 		if(_items[i]->get_name()==name){
@@ -125,13 +141,6 @@ Item* Data_library::create_item_instance(Item* item){
 	_item_instances.push_back(instance);
 	return instance;
 }
-Serving* Data_library::create_unassigned_serving(){
-	Serving* serving = (Serving*)malloc(sizeof(Serving));
-	serving = new Serving(std::to_string(_next_serving_id));
-	_unassigned_servings.push_back(serving);
-	_next_serving_id++;
-	return serving;
-}
 std::string Data_library::list_servings(){
 	std::string output="";
 	for(int i=0;i<_unassigned_servings.size();i++){
@@ -156,8 +165,19 @@ void Data_library::assemble_serving(){
 	_next_serving_id++;
 	for(int i=0;i<_item_instances.size();i++){
 		serving->add_item(_item_instances[i]);
-		//free(_item_instances[i]);
 	}
 	_item_instances.clear();
+}
+void Data_library::delete_serving(Serving* serving){
+	int index=-1;
+	for(int i=0;i<_unassigned_servings.size();i++){
+		if(_unassigned_servings[i]==serving){
+			index=i;
+		}
+	}
+	if(index!=-1){
+		_unassigned_servings.erase(_unassigned_servings.begin()+index);
+		//free(serving);
+	}
 }
 void Data_library::assemble_order(std::vector<int> serving_indexes){}

@@ -67,6 +67,11 @@ Main_window::Main_window(Data_library* data_library) : _data_library{data_librar
     menu_server = Gtk::manage(new Gtk::Menu());
     menuitem_server->set_submenu(*menu_server);
     
+    //				R E G I S T E R   C U S T O M E R
+    menuitem_register_customer = Gtk::manage(new Gtk::MenuItem("_Register New Customer", true));
+    menuitem_register_customer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_register_customer_click));
+    menu_server->append(*menuitem_register_customer);
+    
 	//				C R E A T E   S E R V I N G
     menuitem_s_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_s_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
@@ -97,6 +102,11 @@ Main_window::Main_window(Data_library* data_library) : _data_library{data_librar
     menuitem_c_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_c_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
     menu_customer->append(*menuitem_c_create_serving);
+    
+    //				V E R I F Y   S E R V I N G
+    menuitem_verify_serving = Gtk::manage(new Gtk::MenuItem("_Verify Serving", true));
+    menuitem_verify_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_verify_serving_click));
+    menu_customer->append(*menuitem_verify_serving);
 	
 	//				A S S E M B L E   O R D E R
     menuitem_c_assemble_order = Gtk::manage(new Gtk::MenuItem("_Assemble Order", true));
@@ -244,7 +254,11 @@ void Main_window::on_add_item_click(){
 	dstring=_data_library->list_items(0);
 	update_display();
 }
-void Main_window::on_hire_server_click(){}
+void Main_window::on_hire_server_click(){
+	_data_library->add_user(Dialogs::create_user(1));
+	dstring=_data_library->list_users();
+	update_display();
+}
 void Main_window::on_server_report_click(){}
 void Main_window::on_customer_report_click(){}
 void Main_window::on_inventory_report_click(){}
@@ -293,21 +307,40 @@ void Main_window::on_checkout_order_click(){}
 void Main_window::on_cancel_order_click(){}
 void Main_window::on_run_test_click(){
 	std::string output;
-	Mice::Container container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10);
-    Scoop scoop("Vanilla","Delicious homemade vanilla ice cream scoop",0.8,1.5,10);
-    Topping topping("Chocolate Syrup","Rich 100% milk chocolate syrup",0.1,0.25,10);
-    _data_library->add_item(&container);
-    _data_library->add_item(&scoop);
-    _data_library->add_item(&topping);
-    _data_library->create_item_instance(&container);
-    _data_library->create_item_instance(&scoop);
-    _data_library->create_item_instance(&topping);
+	Mice::Container* container=(Mice::Container*)malloc(sizeof(Container));
+	container = new Mice::Container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10);
+	Scoop* scoop = (Scoop*)malloc(sizeof(Scoop));
+    scoop = new Scoop("Vanilla","Delicious homemade vanilla ice cream scoop",0.8,1.5,10);
+    Topping* topping = (Topping*)malloc(sizeof(Topping));
+    topping = new Topping("Chocolate Syrup","Rich 100% milk chocolate syrup",0.1,0.25,10);
+    _data_library->add_item(container);
+    _data_library->add_item(scoop);
+    _data_library->add_item(topping);
+    _data_library->create_item_instance(container);
+    _data_library->create_item_instance(scoop);
+    _data_library->create_item_instance(topping);
     _data_library->assemble_serving();
     dstring = _data_library->list_servings();
     Login login;
     update_display();
 }
 void Main_window::on_quit_click(){}
+void Main_window::on_verify_serving_click(){
+	std::string serving_id = Dialogs::input(_data_library->list_servings(),"Input serving id of your serving...","serving id #","");
+	Serving* serving = _data_library->get_serving(serving_id);
+	int op = Dialogs::question(serving->to_string(),"Is your serving correct?",{"Yes","No"});
+	dstring = std::to_string(op);
+	update_display();
+	if(op==1){
+		_data_library->delete_serving(serving);
+		on_create_serving_click();
+	}
+}
+void Main_window::on_register_customer_click(){
+	_data_library->add_user(Dialogs::create_user(0));
+	dstring=_data_library->list_users();
+	update_display();
+}
 
 // /////////////////
 // U T I L I T I E S
