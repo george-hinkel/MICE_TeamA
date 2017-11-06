@@ -37,5 +37,7 @@ private:
     std::vector<Order*> _active_orders;
     std::string _library_file_location;
     int _next_serving_id;
+    double _cash_register_balance;
+    std::vector<double> _cash_register_history;
 };
 #endif /* emporium_h */
