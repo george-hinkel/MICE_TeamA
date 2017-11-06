@@ -10,7 +10,8 @@ public:
     void modify_stock(int quantity_to_add);
     std::string get_name();
     std::string get_type();
-    virtual double get_price();
+    virtual double get_retail_price();
+    virtual double get_wholesale_cost();
 protected:
 	std::string _type;
     std::string _name;

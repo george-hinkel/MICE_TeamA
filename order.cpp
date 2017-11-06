@@ -25,4 +25,27 @@ void Order::remove_serving(Serving* serving){
 		_servings.erase(_servings.begin()+index);
 	}
 }
-std::string Order::to_string(){}
+std::string Order::to_string(){
+	std::string output="";
+	for(int i=0;i<_servings.size();i++){
+		output+="Serving # ";
+		output+=i;
+		output+="\t";
+		output+=_servings[i]->to_string();
+	}
+	return output;
+}
+double Order::get_retail_price(){
+	double price=0;
+	for(int i=0;i<_servings.size();i++){
+		price+=_servings[i]->get_retail_price();
+	}
+	return price;
+}
+double Order::get_wholesale_cost(){
+	double cost=0;
+	for(int i=0;i<_servings.size();i++){
+		cost+=_servings[i]->get_wholesale_cost();
+	}
+	return cost;
+}

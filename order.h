@@ -10,6 +10,8 @@ class Order
 		Serving* get_serving(std::string serving_id);
 		void remove_serving(Serving* serving);
 		std::string to_string();
+		double get_wholesale_cost();
+		double get_retail_price();
 	private:
 		std::vector<Serving*> _servings;
 };

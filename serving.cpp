@@ -39,3 +39,17 @@ std::string Serving::to_string(){
 	}
 	return output;
 }
+double Serving::get_retail_price(){
+	double price=0;
+	for(int i=0;i<_items.size();i++){
+		price+=_items[i]->get_retail_price();
+	}
+	return price;
+}
+double Serving::get_wholesale_cost(){
+	double cost=0;
+	for(int i=0;i<_items.size();i++){
+		cost+=_items[i]->get_wholesale_cost();
+	}
+	return cost;
+}
