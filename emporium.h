@@ -30,13 +30,18 @@ public:
     std::string list_orders();
     std::string get_serving_listing();
 private:
-    std::vector<Item*> _items;
-    std::vector<User*> _users;
-    std::vector<Item*> _item_instances;
-    std::vector<Serving*> _unassigned_servings;
-    std::vector<Order*> _active_orders;
+    std::vector<Item*> _items; //stock of items
+    std::vector<User*> _users; //users i.e. servers, customers etc
+    
+    std::vector<Item*> _item_instances;//instances of items used in servings, list of those not in a serving
+    std::vector<Serving*> _unassigned_servings;//servings not in an order
+    std::vector<Order*> _active_orders;//active orders
+    
     std::string _library_file_location;
+    
     int _next_serving_id;
+    int _next_order_id;
+    
     double _cash_register_balance;
     std::vector<double> _cash_register_history;
 };

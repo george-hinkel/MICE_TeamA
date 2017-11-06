@@ -49,3 +49,30 @@ double Order::get_wholesale_cost(){
 	}
 	return cost;
 }
+std::string Order::get_id(){
+	return _order_id;
+}
+std::string Order::get_status(){
+	return _status;
+}
+void Order::fill(){
+	if(_status=="unfilled"){
+		_status="filled";
+	}else{
+		throw Invalid_status_change(_status,"filled");
+	}
+}
+void Order::cancel(){
+	if(_status=="unfilled"){
+		_status="cancelled";
+	}else{
+		throw Invalid_status_change(_status,"cancelled");
+	}
+}
+double Order::pay(){
+	if(_status=="filled"){
+		_status="paid";
+	}else{
+		throw Invalid_status_change(_status,"paid");
+	}
+}

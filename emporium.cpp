@@ -2,6 +2,7 @@
 #include <string>
 Emporium::Emporium(std::string library_file_location) : _library_file_location{library_file_location} {
 	_next_serving_id=0;
+	_next_order_id=0;
     read_in_data();
 }
 void Emporium::read_in_data(){}
@@ -183,7 +184,8 @@ void Emporium::delete_serving(Serving* serving){
 void Emporium::assemble_order(std::vector<int> serving_indexes){
 	Order* order = (Order*)malloc(sizeof(Order));
 	std::vector<Serving*> assigned_servings;
-	order = new Order();
+	order = new Order(std::to_string(_next_order_id));
+	_next_order_id++;
 	for(int& i : serving_indexes){
 		order->add_serving(_unassigned_servings[i]);
 		assigned_servings.push_back(_unassigned_servings[i]);
