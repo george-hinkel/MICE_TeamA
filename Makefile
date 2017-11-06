@@ -8,8 +8,8 @@ debug: main
 
 rebuild: clean main
 
-main: main.o main_window.o data_library.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o login.o user.o customer.o server.o manager.o
-	$(CXX) $(CXXFLAGS) -o main main.o main_window.o data_library.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o user.o customer.o server.o manager.o login.o `pkg-config gtkmm-3.0 --cflags --libs`
+main: main.o main_window.o emporium.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o login.o user.o customer.o server.o manager.o
+	$(CXX) $(CXXFLAGS) -o main main.o main_window.o emporium.o dialogs.o order.o serving.o scoop.o container.o topping.o item.o user.o customer.o server.o manager.o login.o `pkg-config gtkmm-3.0 --cflags --libs`
 	./main
 main.o: main.cpp order.h order.h serving.h scoop.h container.h topping.h login.h main_window.h
 	$(CXX) $(CXXFLAGS) -c main.cpp `pkg-config gtkmm-3.0 --cflags --libs`
@@ -42,8 +42,8 @@ server.o: server.cpp server.h
 manager.o: manager.cpp manager.h
 	$(CXX) $(CXXFLAGS) -c manager.cpp
 	
-data_library.o: data_library.cpp data_library.h
-	$(CXX) $(CXXFLAGS) -c data_library.cpp
+emporium.o: emporium.cpp emporium.h
+	$(CXX) $(CXXFLAGS) -c emporium.cpp
 login.o: login.cpp login.h
 	$(CXX) $(CXXFLAGS) -c login.cpp
 clean:

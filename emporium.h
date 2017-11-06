@@ -1,12 +1,12 @@
-#ifndef data_library_h
-#define data_library_h
+#ifndef emporium_h
+#define emporium_h
 #include "mice.h"
 #include "order.h"
 #include "serving.h"
 
-class Data_library{
+class Emporium{
 public:
-    Data_library(std::string library_file_location="");
+    Emporium(std::string library_file_location="");
     void read_in_data();
     void write_out_data();
     
@@ -36,4 +36,4 @@ private:
     std::string _library_file_location;
     int _next_serving_id;
 };
-#endif /* data_library_h */
+#endif /* emporium_h */

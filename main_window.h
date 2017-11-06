@@ -2,13 +2,13 @@
 #define MAIN_WINDOW_H
 #include <vector>
 #include <gtkmm.h>
-#include "data_library.h"
+#include "emporium.h"
 #include "mice.h"
 #include "login.h"
 #include "dialogs.h"
 class Main_window : public Gtk::Window{
     public:
-        Main_window(Data_library* data_library);
+        Main_window(Emporium* emporium);
         virtual ~Main_window();
     protected:
         void on_add_item_click();  
@@ -27,7 +27,7 @@ class Main_window : public Gtk::Window{
         void on_verify_serving_click();
         void on_register_customer_click();
     private:
-    	Data_library* _data_library;
+    	Emporium* _emporium;
     
     	int activeWindow=0;
     	std::vector<Gtk::Entry *> entries;
