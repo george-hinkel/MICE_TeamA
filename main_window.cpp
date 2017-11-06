@@ -301,7 +301,23 @@ void Main_window::on_create_serving_click(){
 	dstring=_emporium->list_servings();
 	update_display();
 }
-void Main_window::on_assemble_order_click(){}
+void Main_window::on_assemble_order_click(){
+	int number=0;
+	std::vector<int> serving_indexes;
+	std::string servings=_emporium->get_serving_listing();
+	int index=0;
+	
+	number=stoi(Dialogs::input("How many servings are in this order?","Choose number of servings","1","1"));
+	for(int i=0;i<number;i++){
+		index=stoi(Dialogs::input(servings,"Choose serving index","0","0"));
+		serving_indexes.push_back(index);
+	}
+	
+	_emporium->assemble_order(serving_indexes);
+	tstring = "Orders...";
+	dstring = _emporium->list_orders();
+	update_display();
+}
 void Main_window::on_fill_order_click(){}
 void Main_window::on_checkout_order_click(){}
 void Main_window::on_cancel_order_click(){}

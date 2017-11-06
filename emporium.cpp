@@ -180,4 +180,35 @@ void Emporium::delete_serving(Serving* serving){
 		//free(serving);
 	}
 }
-void Emporium::assemble_order(std::vector<int> serving_indexes){}
+void Emporium::assemble_order(std::vector<int> serving_indexes){
+	Order* order = (Order*)malloc(sizeof(Order));
+	std::vector<Serving*> assigned_servings;
+	order = new Order();
+	for(int& i : serving_indexes){
+		order->add_serving(_unassigned_servings[i]);
+		assigned_servings.push_back(_unassigned_servings[i]);
+	}
+	for(int i=0;i<assigned_servings.size();i++){
+		delete_serving(assigned_servings[i]);
+	}
+	_active_orders.push_back(order);
+}
+std::string Emporium::list_orders(){
+	std::string output="";
+	for(int i=0;i<_active_orders.size();i++){
+		output+="Order # ";
+		output+=std::to_string(i+1);
+		output+="\n";
+		output+=_active_orders[i]->to_string();
+	}
+	return output;
+}
+std::string Emporium::get_serving_listing(){
+	std::string output="";
+	for(int i=0;i<_unassigned_servings.size();i++){
+		output+= std::to_string(i);
+		output+= ": ";
+		output+= _unassigned_servings[i]->to_short_string();
+	}
+	return output;
+}

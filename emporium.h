@@ -27,6 +27,8 @@ public:
     void delete_serving(Serving* serving);
     
     void assemble_order(std::vector<int> serving_indexes);
+    std::string list_orders();
+    std::string get_serving_listing();
 private:
     std::vector<Item*> _items;
     std::vector<User*> _users;

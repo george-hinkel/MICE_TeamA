@@ -53,3 +53,15 @@ double Serving::get_wholesale_cost(){
 	}
 	return cost;
 }
+std::string Serving::to_short_string(){
+	std::string output="";
+	for(int i=0;i<_items.size();i++){
+		output+= "Item ";
+		output+= std::to_string(i+1);
+		output+= ": ";
+		output+= _items[i]->get_name();
+		output+= ";  ";
+	}
+	output+="\n";
+	return output;
+}

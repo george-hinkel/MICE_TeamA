@@ -29,7 +29,7 @@ std::string Order::to_string(){
 	std::string output="";
 	for(int i=0;i<_servings.size();i++){
 		output+="Serving # ";
-		output+=i;
+		output+=std::to_string(i+1);
 		output+="\t";
 		output+=_servings[i]->to_string();
 	}
