@@ -107,6 +107,11 @@ Main_window::Main_window(Emporium* emporium) : _emporium{emporium} {
     menuitem_c_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_c_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
     menu_customer->append(*menuitem_c_create_serving);
+
+	//			 C U S T O M E R  V I E W  O R D E R
+    menuitem_c_view_order = Gtk::manage(new Gtk::MenuItem("_View Order", true));
+    menuitem_c_view_order->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_view_order_click));
+    menu_customer->append(*menuitem_c_view_order);
     
     //				V E R I F Y   S E R V I N G
     menuitem_verify_serving = Gtk::manage(new Gtk::MenuItem("_Verify Serving", true));
@@ -307,7 +312,6 @@ void Main_window::on_create_serving_click(){
 	update_display();
 }
 void Main_window::on_view_serving_click(){
-        // PUT THE WORDS HERE
         std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);
 	int done_view = Dialogs::question(serving->to_string(), "Click when ready to fill",{"Ready"});
@@ -334,6 +338,7 @@ void Main_window::on_assemble_order_click(){
 	dstring = _emporium->list_orders(0,0);
 	update_display();
 }
+void Main_window::on_view_order_click(){};
 void Main_window::on_fill_order_click(){
 	std::string orders = _emporium->list_orders(1,1);
 	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
