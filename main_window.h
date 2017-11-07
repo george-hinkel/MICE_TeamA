@@ -18,6 +18,7 @@ class Main_window : public Gtk::Window{
         void on_inventory_report_click();
         void on_order_report_click();
         void on_create_serving_click();
+        void on_view_serving_click();
         void on_assemble_order_click();
         void on_fill_order_click();
         void on_checkout_order_click();
@@ -26,6 +27,7 @@ class Main_window : public Gtk::Window{
         void on_quit_click();
         void on_verify_serving_click();
         void on_register_customer_click();
+	void on_view_order_click();
     private:
     	Emporium* _emporium;
     
@@ -70,12 +72,14 @@ class Main_window : public Gtk::Window{
 			Gtk::Menu *menu_server;
 				Gtk::MenuItem *menuitem_register_customer;
 				Gtk::MenuItem *menuitem_s_create_serving;
+                                Gtk::MenuItem *menuitem_s_view_serving;
 				Gtk::MenuItem *menuitem_s_assemble_order;
 				Gtk::MenuItem *menuitem_fill_order;
 				Gtk::MenuItem *menuitem_checkout_order;
 			Gtk::MenuItem *menuitem_customer;
 			Gtk::Menu *menu_customer;
 				Gtk::MenuItem *menuitem_c_create_serving;
+				Gtk::MenuItem *menuitem_c_view_order;
 				Gtk::MenuItem *menuitem_verify_serving;
 				Gtk::MenuItem *menuitem_c_assemble_order;
 				Gtk::MenuItem *menuitem_cancel_order;
