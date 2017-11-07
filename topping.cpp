@@ -18,3 +18,6 @@ double Topping::get_retail_price(){
 double Topping::get_wholesale_cost(){
 	return _wholesale_cost*_quantifier;
 }
+std::string Topping::to_file_string(int op){
+	return Item::to_file_string(op)+std::to_string(_quantifier)+"\n";
+}

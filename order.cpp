@@ -84,3 +84,11 @@ double Order::pay(){
 		throw Invalid_status_change(_status,"paid");
 	}
 }
+std::string Order::to_file_string(){
+	std::string output = "order\n"+_order_id+"\n"+_status+"\n";
+	for(int i=0;i<_servings.size();i++){
+		output+= _servings[i]->to_file_string();
+	}
+	output+= "end order\n";
+	return output;
+}

@@ -355,9 +355,10 @@ void Main_window::on_cancel_order_click(){
 	update_display();
 }
 void Main_window::on_run_test_click(){
+	/*
 	std::string output;
 	Mice::Container* container=(Mice::Container*)malloc(sizeof(Container));
-	container = new Mice::Container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10);
+	container = new Mice::Container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10,"file-path");
 	Scoop* scoop = (Scoop*)malloc(sizeof(Scoop));
     scoop = new Scoop("Vanilla","Delicious homemade vanilla ice cream scoop",0.8,1.5,10);
     Topping* topping = (Topping*)malloc(sizeof(Topping));
@@ -369,11 +370,18 @@ void Main_window::on_run_test_click(){
     _emporium->create_item_instance(scoop);
     _emporium->create_item_instance(topping);
     _emporium->assemble_serving();
-    dstring = _emporium->list_servings();
+    //dstring = _emporium->list_servings();
+    dstring = container->to_file_string(0);
     Login login;
+    */
+    dstring = _emporium->list_orders(0,1);
     update_display();
+    
 }
-void Main_window::on_quit_click(){}
+void Main_window::on_quit_click(){
+	_emporium->write_out_data();
+	hide();
+}
 void Main_window::on_verify_serving_click(){
 	std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);

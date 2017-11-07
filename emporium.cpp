@@ -1,12 +1,157 @@
 #include "emporium.h"
 #include <string>
+#include <iostream>
 Emporium::Emporium(std::string library_file_location) : _library_file_location{library_file_location} {
-	_next_serving_id=0;
-	_next_order_id=0;
     read_in_data();
 }
-void Emporium::read_in_data(){}
-void Emporium::write_out_data(){}
+void Emporium::read_in_data(){
+	std::ifstream file;
+	file.open(_library_file_location);
+	file.seekg(0);
+	std::string line;
+	std::vector<std::string> reads;
+	std::vector<Serving*> temp_servings;
+	std::vector<Item*> temp_items;
+	int serving_count;
+	int max_order_id=-1;
+	int max_serving_id=-1;
+	while(getline(file,line)){
+		if(line=="items"){
+			while(line!="end items"){
+				getline(file,line);
+				if(line=="container"){
+					for(int i=0;i<7;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Mice::Container* container = (Mice::Container*)malloc(sizeof(Mice::Container));
+					container = new Mice::Container(reads[0],reads[1],stod(reads[2]),stod(reads[3]),stoi(reads[4]),reads[5],stoi(reads[6]));
+					_items.push_back(container);
+					reads.clear();
+				}else if(line=="scoop"){
+					for(int i=0;i<6;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Scoop* scoop = (Scoop*)malloc(sizeof(Scoop));
+					scoop = new Scoop(reads[0],reads[1],stod(reads[2]),stod(reads[3]),stoi(reads[4]),reads[5]);
+					_items.push_back(scoop);
+					reads.clear();
+				}else if(line=="topping"){
+					for(int i=0;i<7;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Topping* topping = (Topping*)malloc(sizeof(Topping));
+					topping = new Topping(reads[0],reads[1],stod(reads[2]),stod(reads[3]),stoi(reads[4]),reads[5],stoi(reads[6]));
+					_items.push_back(topping);
+					reads.clear();
+				}
+			}
+		}else if(line=="users"){
+			while(line!="end users"){
+				getline(file,line);
+				if(line=="0"){//customer
+					for(int i=0;i<4;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Customer* customer = (Customer*)malloc(sizeof(Customer));
+					customer = new Customer(reads[0],reads[1],reads[2],reads[3]);
+					_users.push_back(customer);
+					reads.clear();
+				}else if(line=="1"){//server
+					for(int i=0;i<5;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Server* server = (Server*)malloc(sizeof(Server));
+					server = new Server(reads[0],reads[1],reads[2],stoi(reads[3]),stod(reads[4]));
+					_users.push_back(server);
+					reads.clear();
+				}else if(line=="2"){//manager
+					for(int i=0;i<3;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Manager* manager = (Manager*)malloc(sizeof(Manager));
+					manager = new Manager(reads[0],reads[1],reads[2]);
+					_users.push_back(manager);
+					reads.clear();
+				}
+			}
+		}else if(line=="orders"){
+			while(line!="end orders"){
+				getline(file,line);
+				if(line=="order"){
+					serving_count=0;
+					for(int i=0;i<2;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					Order* order = (Order*)malloc(sizeof(Order));
+					order = new Order(reads[0],reads[1]);
+					if(stoi(reads[0])>max_order_id) max_order_id = stoi(reads[0]);
+					reads.clear();
+					while(line!="end order"){
+						getline(file,line);
+						if(line=="serving"){
+							getline(file,line);
+							Serving* serving = (Serving*)malloc(sizeof(Serving));
+							serving = new Serving(line);
+							if(stoi(line)>max_serving_id) max_serving_id = stoi(line);
+							getline(file,line);
+							while(line!="end serving"){
+								Item* item = create_item_instance(get_item(line));
+								if(item->get_type()=="topping"){
+									getline(file,line);
+									static_cast<Topping*>(item)->change_quantifier(stoi(line));
+								}
+								temp_items.push_back(item);
+								getline(file,line);
+							}
+							for(int i=0;i<temp_items.size();i++){
+								serving->add_item(temp_items[i]);
+							}
+							temp_items.clear();
+							temp_servings.push_back(serving);
+						}
+					}
+					for(int i=0;i<temp_servings.size();i++){
+						order->add_serving(temp_servings[i]);
+					}
+					temp_servings.clear();
+					_item_instances.clear();
+					_orders.push_back(order);
+				}
+			}
+		}
+	}
+	_next_serving_id = max_serving_id+1;
+	_next_order_id   = max_order_id+1;
+	file.close();
+}
+void Emporium::write_out_data(){
+	std::ofstream file;
+	file.open(_library_file_location);
+	file.seekp(0);
+	if(_items.size()>0){ file << "items" << std::endl;}
+	for(int i=0;i<_items.size();i++){
+		file << _items[i]->to_file_string(0);
+	}
+	if(_items.size()>0){ file << "end items" << std::endl;}
+	if(_users.size()!=0) file << "users" << std::endl;
+	for(int i=0;i<_users.size();i++){
+		file << _users[i]->to_file_string();
+	}
+	if(_users.size()!=0) file << "end users" << std::endl;
+	if(_orders.size()!=0) file << "orders" << std::endl;
+	for(int i=0;i<_orders.size();i++){
+		file << _orders[i]->to_file_string();
+	}
+	if(_orders.size()!=0) file << "end orders" << std::endl;
+	file.close();
+}
 void Emporium::add_user(User* user){
 	_users.push_back(user);
 }
@@ -193,36 +338,36 @@ void Emporium::assemble_order(std::vector<int> serving_indexes){
 	for(int i=0;i<assigned_servings.size();i++){
 		delete_serving(assigned_servings[i]);
 	}
-	_active_orders.push_back(order);
+	_orders.push_back(order);
 }
 std::string Emporium::list_orders(int op,int op2){
 	std::string output="";
 	if(op==0){
-		for(int i=0;i<_active_orders.size();i++){
-			output+=_active_orders[i]->to_string(op2);
+		for(int i=0;i<_orders.size();i++){
+			output+=_orders[i]->to_string(op2);
 		}
 	}else if(op==1){
-		for(int i=0;i<_active_orders.size();i++){
-			if(_active_orders[i]->get_status()=="unfilled"){
-				output+=_active_orders[i]->to_string(op2);
+		for(int i=0;i<_orders.size();i++){
+			if(_orders[i]->get_status()=="unfilled"){
+				output+=_orders[i]->to_string(op2);
 			}
 		}
 	}else if(op==2){
-		for(int i=0;i<_active_orders.size();i++){
-			if(_active_orders[i]->get_status()=="filled"){
-				output+=_active_orders[i]->to_string(op2);
+		for(int i=0;i<_orders.size();i++){
+			if(_orders[i]->get_status()=="filled"){
+				output+=_orders[i]->to_string(op2);
 			}
 		}
 	}else if(op==3){
-		for(int i=0;i<_active_orders.size();i++){
-			if(_active_orders[i]->get_status()=="cancelled"){
-				output+=_active_orders[i]->to_string(op2);
+		for(int i=0;i<_orders.size();i++){
+			if(_orders[i]->get_status()=="cancelled"){
+				output+=_orders[i]->to_string(op2);
 			}
 		}
 	}else if(op==4){
-		for(int i=0;i<_active_orders.size();i++){
-			if(_active_orders[i]->get_status()=="paid"){
-				output+=_active_orders[i]->to_string(op2);
+		for(int i=0;i<_orders.size();i++){
+			if(_orders[i]->get_status()=="paid"){
+				output+=_orders[i]->to_string(op2);
 			}
 		}
 	}
@@ -238,23 +383,23 @@ std::string Emporium::get_serving_listing(){
 	return output;
 }
 void Emporium::fill_order(std::string order_id){
-	for(int i=0;i<_active_orders.size();i++){
-		if(_active_orders[i]->get_id()==order_id){
-			_active_orders[i]->fill();
+	for(int i=0;i<_orders.size();i++){
+		if(_orders[i]->get_id()==order_id){
+			_orders[i]->fill();
 		}
 	}
 }
 void Emporium::pay_order(std::string order_id){
-	for(int i=0;i<_active_orders.size();i++){
-		if(_active_orders[i]->get_id()==order_id){
-			_active_orders[i]->pay();
+	for(int i=0;i<_orders.size();i++){
+		if(_orders[i]->get_id()==order_id){
+			_orders[i]->pay();
 		}
 	}
 }
 void Emporium::cancel_order(std::string order_id){
-	for(int i=0;i<_active_orders.size();i++){
-		if(_active_orders[i]->get_id()==order_id){
-			_active_orders[i]->cancel();
+	for(int i=0;i<_orders.size();i++){
+		if(_orders[i]->get_id()==order_id){
+			_orders[i]->cancel();
 		}
 	}
 }

@@ -1,0 +1,46 @@
+items
+scoop
+Vanilla
+Delicious Homemade Vanilla
+0.100000
+0.500000
+20
+file-path
+container
+Large Cup
+Cup to hold your scoops!
+0.100000
+0.750000
+20
+
+5
+topping
+Chocolate Sauce
+Hersheys brand chocolate syrup
+0.500000
+1.000000
+20
+
+0
+end items
+users
+1
+ghinkel
+pswd1010
+George
+100
+18.250000
+end users
+orders
+order
+1
+filled
+serving
+1
+Large Cup
+Vanilla
+Chocolate Sauce
+1
+end serving
+end order
+end orders

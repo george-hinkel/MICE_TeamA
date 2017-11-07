@@ -65,3 +65,11 @@ std::string Serving::to_short_string(){
 	output+="\n";
 	return output;
 }
+std::string Serving::to_file_string(){
+	std::string output = "serving\n"+_serving_id+"\n";
+	for(int i=0;i<_items.size();i++){
+		output+= _items[i]->to_file_string(1);
+	}
+	output+= "end serving\n";
+	return output;
+}

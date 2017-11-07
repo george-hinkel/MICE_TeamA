@@ -11,6 +11,7 @@ public:
     std::string get_id();
     int get_privilege();
     virtual std::string to_string();
+    virtual std::string to_file_string();
 protected:
     std::string _username;
     std::string _password;

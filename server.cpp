@@ -8,4 +8,6 @@ Server::Server(std::string username,std::string password,std::string name,int al
 std::string Server::to_string(){
 	return "Server ID: "+_id+"\tUsername: "+_username+"\tName: "+_name+"\tAll time total orders filled: "+std::to_string(_all_time_orders_filled)+"Hourly wage: "+std::to_string(_hourly_wage)+"\n";
 }
-
+std::string Server::to_file_string(){
+	return User::to_file_string()+std::to_string(_all_time_orders_filled)+"\n"+std::to_string(_hourly_wage)+"\n";
+}

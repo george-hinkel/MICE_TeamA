@@ -5,6 +5,7 @@ class Server : public User{
 	public:
 		Server(std::string username,std::string password,std::string name,int all_time_orders_filled,double hourly_wage);
 		std::string to_string();
+		std::string to_file_string();
 	private:
 		int _all_time_orders_filled;
 		double _hourly_wage;

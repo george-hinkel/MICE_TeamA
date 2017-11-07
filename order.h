@@ -33,6 +33,7 @@ class Order
 		void fill();
 		void cancel();
 		double pay();
+		std::string to_file_string();
 	private:
 		std::vector<Serving*> _servings;
 		std::string _status;

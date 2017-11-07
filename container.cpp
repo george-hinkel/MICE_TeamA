@@ -9,4 +9,11 @@ std::string Container::to_string(){
     std::sprintf(output,"Name: %s\tMax Scoops: %d\tWholesale Cost: %0.2lf\tRetail Price: %0.2lf\tStock Remaining: %d\nDescription: %s\n",_name.c_str(),_max_scoops,_wholesale_cost,_retail_price,_stock_remaining,_description.c_str());
     return output;
 }
+std::string Container::to_file_string(int op){
+	if(op==0){
+		return Item::to_file_string(op)+std::to_string(_max_scoops)+"\n";
+	}else if(op==1){
+		return Item::to_file_string(op);
+	}
+}
 }

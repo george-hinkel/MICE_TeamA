@@ -4,7 +4,7 @@
 
 class Item{
 public:
-    Item(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="") : _name{name},_description{description},_wholesale_cost{wholesale_cost},_retail_price{retail_price},_stock_remaining{initial_stock},_image_file_path{image_file_path} { }
+    Item(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="file-path");
     virtual std::string to_string();
     int get_stock_remaining();
     void modify_stock(int quantity_to_add);
@@ -12,6 +12,7 @@ public:
     std::string get_type();
     virtual double get_retail_price();
     virtual double get_wholesale_cost();
+    virtual std::string to_file_string(int op);
 protected:
 	std::string _type;
     std::string _name;

@@ -23,9 +23,6 @@ class Dialogs {
     // Display an image from a disk file
     static void image(string filename, string title = "Image", string msg = "");
     
-    //request for string of vectors representing a publication
-    static vector<string> input_publication();
-    
     static Item* create_item();
     
     static User* create_user(int user_type); 

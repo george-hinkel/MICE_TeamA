@@ -19,3 +19,6 @@ int User::get_privilege(){
 std::string User::to_string(){
 	return "Username: "+_username+"\tName: "+_name+"\tID: "+_id+"\n";
 }
+std::string User::to_file_string(){
+	return std::to_string(_privilege)+"\n"+_username+"\n"+_password+"\n"+_name+"\n";
+}

@@ -1,5 +1,7 @@
 #ifndef emporium_h
 #define emporium_h
+#include <iostream>
+#include <fstream>
 #include "mice.h"
 #include "order.h"
 #include "serving.h"
@@ -38,7 +40,7 @@ private:
     
     std::vector<Item*> _item_instances;//instances of items used in servings, list of those not in a serving
     std::vector<Serving*> _unassigned_servings;//servings not in an order
-    std::vector<Order*> _active_orders;//active orders
+    std::vector<Order*> _orders;//active orders
     
     std::string _library_file_location;
     

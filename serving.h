@@ -15,6 +15,7 @@ class Serving
 		double get_retail_price();
 		double get_wholesale_cost();
 		std::string to_short_string();
+		std::string to_file_string();
 	private:
     	std::vector<Item*> _items;
     	std::string _serving_id;

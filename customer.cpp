@@ -8,4 +8,7 @@ Customer::Customer(std::string username,std::string password,std::string name,st
 std::string Customer::to_string(){
 	return "Customer ID: "+_id+"\tUsername: "+_username+"\tName: "+_name+"\tPhone number: "+_phone_number+"\n";
 }
+std::string Customer::to_file_string(){
+	return User::to_file_string()+_phone_number+"\n";
+}
 
