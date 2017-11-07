@@ -76,6 +76,11 @@ Main_window::Main_window(Emporium* emporium) : _emporium{emporium} {
     menuitem_s_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_s_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
     menu_server->append(*menuitem_s_create_serving);
+     
+        //                    V I E W  S E R V I N G
+    menuitem_s_view_serving = Gtk::manage(new Gtk::MenuItem("_View Serving", true));
+    menuitem_s_view_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_view_serving_click));
+    menu_server->append(*menuitem_s_view_serving);
     
 	//				A S S E M B L E   O R D E R
     menuitem_s_assemble_order = Gtk::manage(new Gtk::MenuItem("_Assemble Order", true));
@@ -299,6 +304,17 @@ void Main_window::on_create_serving_click(){
 	_emporium->assemble_serving();
 	
 	dstring=_emporium->list_servings();
+	update_display();
+}
+void Main_window::on_view_serving_click(){
+        // PUT THE WORDS HERE
+        std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
+	Serving* serving = _emporium->get_serving(serving_id);
+	int done_view = Dialogs::question(serving->to_string(), "Click when ready to fill",{"Ready"});
+	dstring = std::to_string(done_view);
+	if(done_view==0){
+		on_assemble_order_click();
+	}
 	update_display();
 }
 void Main_window::on_assemble_order_click(){
