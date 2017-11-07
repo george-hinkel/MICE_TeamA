@@ -195,13 +195,36 @@ void Emporium::assemble_order(std::vector<int> serving_indexes){
 	}
 	_active_orders.push_back(order);
 }
-std::string Emporium::list_orders(){
+std::string Emporium::list_orders(int op,int op2){
 	std::string output="";
-	for(int i=0;i<_active_orders.size();i++){
-		output+="Order # ";
-		output+=std::to_string(i+1);
-		output+="\n";
-		output+=_active_orders[i]->to_string();
+	if(op==0){
+		for(int i=0;i<_active_orders.size();i++){
+			output+=_active_orders[i]->to_string(op2);
+		}
+	}else if(op==1){
+		for(int i=0;i<_active_orders.size();i++){
+			if(_active_orders[i]->get_status()=="unfilled"){
+				output+=_active_orders[i]->to_string(op2);
+			}
+		}
+	}else if(op==2){
+		for(int i=0;i<_active_orders.size();i++){
+			if(_active_orders[i]->get_status()=="filled"){
+				output+=_active_orders[i]->to_string(op2);
+			}
+		}
+	}else if(op==3){
+		for(int i=0;i<_active_orders.size();i++){
+			if(_active_orders[i]->get_status()=="cancelled"){
+				output+=_active_orders[i]->to_string(op2);
+			}
+		}
+	}else if(op==4){
+		for(int i=0;i<_active_orders.size();i++){
+			if(_active_orders[i]->get_status()=="paid"){
+				output+=_active_orders[i]->to_string(op2);
+			}
+		}
 	}
 	return output;
 }
@@ -213,4 +236,25 @@ std::string Emporium::get_serving_listing(){
 		output+= _unassigned_servings[i]->to_short_string();
 	}
 	return output;
+}
+void Emporium::fill_order(std::string order_id){
+	for(int i=0;i<_active_orders.size();i++){
+		if(_active_orders[i]->get_id()==order_id){
+			_active_orders[i]->fill();
+		}
+	}
+}
+void Emporium::pay_order(std::string order_id){
+	for(int i=0;i<_active_orders.size();i++){
+		if(_active_orders[i]->get_id()==order_id){
+			_active_orders[i]->pay();
+		}
+	}
+}
+void Emporium::cancel_order(std::string order_id){
+	for(int i=0;i<_active_orders.size();i++){
+		if(_active_orders[i]->get_id()==order_id){
+			_active_orders[i]->cancel();
+		}
+	}
 }

@@ -27,8 +27,11 @@ public:
     void delete_serving(Serving* serving);
     
     void assemble_order(std::vector<int> serving_indexes);
-    std::string list_orders();
+    std::string list_orders(int op,int op2);//0=all;1=unfilled;2=filled;3=cancelled;4=paid;;;0=full;1=short
     std::string get_serving_listing();
+    void fill_order(std::string order_id);
+    void pay_order(std::string order_id);
+    void cancel_order(std::string order_id);
 private:
     std::vector<Item*> _items; //stock of items
     std::vector<User*> _users; //users i.e. servers, customers etc

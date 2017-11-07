@@ -25,7 +25,7 @@ class Order
 		void add_serving(Serving* serving);
 		Serving* get_serving(std::string serving_id);
 		void remove_serving(Serving* serving);
-		std::string to_string();
+		std::string to_string(int op);//0=full;1=short
 		double get_wholesale_cost();
 		double get_retail_price();
 		std::string get_id();

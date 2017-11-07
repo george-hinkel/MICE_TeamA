@@ -25,13 +25,21 @@ void Order::remove_serving(Serving* serving){
 		_servings.erase(_servings.begin()+index);
 	}
 }
-std::string Order::to_string(){
-	std::string output="";
+std::string Order::to_string(int op){
+	std::string output="Order ";
+	output+=_order_id;
+	output+="\tStatus: '";
+	output+=_status;
+	output+="'\n";
 	for(int i=0;i<_servings.size();i++){
 		output+="Serving # ";
 		output+=std::to_string(i+1);
 		output+="\t";
-		output+=_servings[i]->to_string();
+		if(op==0){
+			output+=_servings[i]->to_string();
+		}else if(op==1){
+			output+=_servings[i]->to_short_string();
+		}
 	}
 	return output;
 }
