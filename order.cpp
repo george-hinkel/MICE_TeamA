@@ -25,4 +25,54 @@ void Order::remove_serving(Serving* serving){
 		_servings.erase(_servings.begin()+index);
 	}
 }
-std::string Order::to_string(){}
+std::string Order::to_string(){
+	std::string output="";
+	for(int i=0;i<_servings.size();i++){
+		output+="Serving # ";
+		output+=std::to_string(i+1);
+		output+="\t";
+		output+=_servings[i]->to_string();
+	}
+	return output;
+}
+double Order::get_retail_price(){
+	double price=0;
+	for(int i=0;i<_servings.size();i++){
+		price+=_servings[i]->get_retail_price();
+	}
+	return price;
+}
+double Order::get_wholesale_cost(){
+	double cost=0;
+	for(int i=0;i<_servings.size();i++){
+		cost+=_servings[i]->get_wholesale_cost();
+	}
+	return cost;
+}
+std::string Order::get_id(){
+	return _order_id;
+}
+std::string Order::get_status(){
+	return _status;
+}
+void Order::fill(){
+	if(_status=="unfilled"){
+		_status="filled";
+	}else{
+		throw Invalid_status_change(_status,"filled");
+	}
+}
+void Order::cancel(){
+	if(_status=="unfilled"){
+		_status="cancelled";
+	}else{
+		throw Invalid_status_change(_status,"cancelled");
+	}
+}
+double Order::pay(){
+	if(_status=="filled"){
+		_status="paid";
+	}else{
+		throw Invalid_status_change(_status,"paid");
+	}
+}

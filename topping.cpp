@@ -12,6 +12,9 @@ std::string Topping::to_string(){
 void Topping::change_quantifier(int quantifier){
 	_quantifier=quantifier;
 }
-double Topping::get_price(){
+double Topping::get_retail_price(){
 	return _retail_price*_quantifier;
+}
+double Topping::get_wholesale_cost(){
+	return _wholesale_cost*_quantifier;
 }

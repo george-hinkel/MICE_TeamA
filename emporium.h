@@ -1,12 +1,12 @@
-#ifndef data_library_h
-#define data_library_h
+#ifndef emporium_h
+#define emporium_h
 #include "mice.h"
 #include "order.h"
 #include "serving.h"
 
-class Data_library{
+class Emporium{
 public:
-    Data_library(std::string library_file_location="");
+    Emporium(std::string library_file_location="");
     void read_in_data();
     void write_out_data();
     
@@ -27,13 +27,22 @@ public:
     void delete_serving(Serving* serving);
     
     void assemble_order(std::vector<int> serving_indexes);
+    std::string list_orders();
+    std::string get_serving_listing();
 private:
-    std::vector<Item*> _items;
-    std::vector<User*> _users;
-    std::vector<Item*> _item_instances;
-    std::vector<Serving*> _unassigned_servings;
-    std::vector<Order*> _active_orders;
+    std::vector<Item*> _items; //stock of items
+    std::vector<User*> _users; //users i.e. servers, customers etc
+    
+    std::vector<Item*> _item_instances;//instances of items used in servings, list of those not in a serving
+    std::vector<Serving*> _unassigned_servings;//servings not in an order
+    std::vector<Order*> _active_orders;//active orders
+    
     std::string _library_file_location;
+    
     int _next_serving_id;
+    int _next_order_id;
+    
+    double _cash_register_balance;
+    std::vector<double> _cash_register_history;
 };
-#endif /* data_library_h */
+#endif /* emporium_h */

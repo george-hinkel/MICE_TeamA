@@ -12,6 +12,9 @@ class Serving
 		void remove_item(Item* item);
 		std::string to_string();
 		std::string get_id();
+		double get_retail_price();
+		double get_wholesale_cost();
+		std::string to_short_string();
 	private:
     	std::vector<Item*> _items;
     	std::string _serving_id;

@@ -2,7 +2,7 @@
 using std::vector;
 using std::string;
 
-Main_window::Main_window(Data_library* data_library) : _data_library{data_library} {
+Main_window::Main_window(Emporium* emporium) : _emporium{emporium} {
 
     // /////////////////
     // G U I   S E T U P
@@ -250,13 +250,13 @@ Main_window::~Main_window() { }
 // /////////////////
 
 void Main_window::on_add_item_click(){
-	_data_library->add_item(Dialogs::create_item());
-	dstring=_data_library->list_items(0);
+	_emporium->add_item(Dialogs::create_item());
+	dstring=_emporium->list_items(0);
 	update_display();
 }
 void Main_window::on_hire_server_click(){
-	_data_library->add_user(Dialogs::create_user(1));
-	dstring=_data_library->list_users();
+	_emporium->add_user(Dialogs::create_user(1));
+	dstring=_emporium->list_users();
 	update_display();
 }
 void Main_window::on_server_report_click(){}
@@ -272,36 +272,52 @@ void Main_window::on_create_serving_click(){
 	Item* tempitem;
 	
 	//add a container
-	temp = _data_library->get_items_vector(1);
-	temps= _data_library->get_item_names_vector(1);
-	index = Dialogs::question(_data_library->list_items(1),"Choose a container",temps);
-	_data_library->create_item_instance(temp[index]);
+	temp = _emporium->get_items_vector(1);
+	temps= _emporium->get_item_names_vector(1);
+	index = Dialogs::question(_emporium->list_items(1),"Choose a container",temps);
+	_emporium->create_item_instance(temp[index]);
 	
 	//add 1-N scoops
-	temp = _data_library->get_items_vector(2);
-	temps= _data_library->get_item_names_vector(2);
+	temp = _emporium->get_items_vector(2);
+	temps= _emporium->get_item_names_vector(2);
 	number=stoi(Dialogs::input("How many scoops would you like?","Choose number of scoops","1","1"));
 	for(int i=0;i<number;i++){
-		index = Dialogs::question(_data_library->list_items(2),"Choose a scoop",temps);
-		_data_library->create_item_instance(temp[index]);
+		index = Dialogs::question(_emporium->list_items(2),"Choose a scoop",temps);
+		_emporium->create_item_instance(temp[index]);
 	}
 	
 	//add 0-N toppings
-	temp = _data_library->get_items_vector(3);
-	temps= _data_library->get_item_names_vector(3);
+	temp = _emporium->get_items_vector(3);
+	temps= _emporium->get_item_names_vector(3);
 	number=stoi(Dialogs::input("How many toppings would you like?","Choose number of toppings","0","0"));
 	for(int i=0;i<number;i++){
-		index = Dialogs::question(_data_library->list_items(2),"Choose a topping",temps);
-		tempitem=_data_library->create_item_instance(temp[index]);
+		index = Dialogs::question(_emporium->list_items(2),"Choose a topping",temps);
+		tempitem=_emporium->create_item_instance(temp[index]);
 		static_cast<Topping*>(tempitem)->change_quantifier(Dialogs::question("Choose topping intensity","Choose a topping",qualifiers));
 	}
 	
-	_data_library->assemble_serving();
+	_emporium->assemble_serving();
 	
-	dstring=_data_library->list_servings();
+	dstring=_emporium->list_servings();
 	update_display();
 }
-void Main_window::on_assemble_order_click(){}
+void Main_window::on_assemble_order_click(){
+	int number=0;
+	std::vector<int> serving_indexes;
+	std::string servings=_emporium->get_serving_listing();
+	int index=0;
+	
+	number=stoi(Dialogs::input("How many servings are in this order?","Choose number of servings","1","1"));
+	for(int i=0;i<number;i++){
+		index=stoi(Dialogs::input(servings,"Choose serving index","0","0"));
+		serving_indexes.push_back(index);
+	}
+	
+	_emporium->assemble_order(serving_indexes);
+	tstring = "Orders...";
+	dstring = _emporium->list_orders();
+	update_display();
+}
 void Main_window::on_fill_order_click(){}
 void Main_window::on_checkout_order_click(){}
 void Main_window::on_cancel_order_click(){}
@@ -313,32 +329,32 @@ void Main_window::on_run_test_click(){
     scoop = new Scoop("Vanilla","Delicious homemade vanilla ice cream scoop",0.8,1.5,10);
     Topping* topping = (Topping*)malloc(sizeof(Topping));
     topping = new Topping("Chocolate Syrup","Rich 100% milk chocolate syrup",0.1,0.25,10);
-    _data_library->add_item(container);
-    _data_library->add_item(scoop);
-    _data_library->add_item(topping);
-    _data_library->create_item_instance(container);
-    _data_library->create_item_instance(scoop);
-    _data_library->create_item_instance(topping);
-    _data_library->assemble_serving();
-    dstring = _data_library->list_servings();
+    _emporium->add_item(container);
+    _emporium->add_item(scoop);
+    _emporium->add_item(topping);
+    _emporium->create_item_instance(container);
+    _emporium->create_item_instance(scoop);
+    _emporium->create_item_instance(topping);
+    _emporium->assemble_serving();
+    dstring = _emporium->list_servings();
     Login login;
     update_display();
 }
 void Main_window::on_quit_click(){}
 void Main_window::on_verify_serving_click(){
-	std::string serving_id = Dialogs::input(_data_library->list_servings(),"Input serving id of your serving...","serving id #","");
-	Serving* serving = _data_library->get_serving(serving_id);
+	std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
+	Serving* serving = _emporium->get_serving(serving_id);
 	int op = Dialogs::question(serving->to_string(),"Is your serving correct?",{"Yes","No"});
 	dstring = std::to_string(op);
 	update_display();
 	if(op==1){
-		_data_library->delete_serving(serving);
+		_emporium->delete_serving(serving);
 		on_create_serving_click();
 	}
 }
 void Main_window::on_register_customer_click(){
-	_data_library->add_user(Dialogs::create_user(0));
-	dstring=_data_library->list_users();
+	_emporium->add_user(Dialogs::create_user(0));
+	dstring=_emporium->list_users();
 	update_display();
 }
 

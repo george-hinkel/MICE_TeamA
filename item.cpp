@@ -20,6 +20,9 @@ std::string Item::get_name(){
 std::string Item::get_type(){
 	return _type;
 }
-double Item::get_price(){
+double Item::get_retail_price(){
 	return _retail_price;
+}
+double Item::get_wholesale_cost(){
+	return _wholesale_cost;
 }
