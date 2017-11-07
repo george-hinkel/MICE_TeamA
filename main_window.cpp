@@ -315,12 +315,45 @@ void Main_window::on_assemble_order_click(){
 	
 	_emporium->assemble_order(serving_indexes);
 	tstring = "Orders...";
-	dstring = _emporium->list_orders();
+	dstring = _emporium->list_orders(0,0);
 	update_display();
 }
-void Main_window::on_fill_order_click(){}
-void Main_window::on_checkout_order_click(){}
-void Main_window::on_cancel_order_click(){}
+void Main_window::on_fill_order_click(){
+	std::string orders = _emporium->list_orders(1,1);
+	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	try{
+		_emporium->fill_order(order_id);
+	}catch(Order::Invalid_status_change e){
+		Dialogs::message(e.what(),"Error!");
+	}
+	tstring = "Orders...";
+	dstring = _emporium->list_orders(0,1);
+	update_display();
+}
+void Main_window::on_checkout_order_click(){
+	std::string orders = _emporium->list_orders(2,1);
+	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	try{
+		_emporium->pay_order(order_id);
+	}catch(Order::Invalid_status_change e){
+		Dialogs::message(e.what(),"Error!");
+	}
+	tstring = "Orders...";
+	dstring = _emporium->list_orders(0,1);
+	update_display();
+}
+void Main_window::on_cancel_order_click(){
+	std::string orders = _emporium->list_orders(1,1);
+	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	try{
+		_emporium->cancel_order(order_id);
+	}catch(Order::Invalid_status_change e){
+		Dialogs::message(e.what(),"Error!");
+	}
+	tstring = "Orders...";
+	dstring = _emporium->list_orders(0,1);
+	update_display();
+}
 void Main_window::on_run_test_click(){
 	std::string output;
 	Mice::Container* container=(Mice::Container*)malloc(sizeof(Container));
