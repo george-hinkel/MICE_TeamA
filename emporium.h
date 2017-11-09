@@ -51,7 +51,7 @@ private:
     int _next_order_id;
     
     class Cash_register{
-    	public:
+    	public://O P E R A T O R   O V E R L O A D I N G   ! ! !
     		void operator+=(double num){
     			_balance = _balance + num;
     			_book.push_back(num);
