@@ -35,6 +35,8 @@ public:
     void pay_order(std::string order_id);
     void cancel_order(std::string order_id);
     Order* get_order(std::string order_id);
+    
+    void make_transaction(double transaction_amount);
 private:
     std::vector<Item*> _items; //stock of items
     std::vector<User*> _users; //users i.e. servers, customers etc
@@ -48,7 +50,16 @@ private:
     int _next_serving_id;
     int _next_order_id;
     
-    double _cash_register_balance;
-    std::vector<double> _cash_register_history;
+    class Cash_register{
+    	public:
+    		void operator+=(double num){
+    			_balance = _balance + num;
+    			_book.push_back(num);
+    		}
+    	private:
+    		double _balance;
+    		std::vector<double> _book;
+    		std::vector<std::string> _history;
+    }_cash_register;
 };
 #endif /* emporium_h */

@@ -390,11 +390,15 @@ void Emporium::fill_order(std::string order_id){
 	}
 }
 void Emporium::pay_order(std::string order_id){
+	Order* order;
 	for(int i=0;i<_orders.size();i++){
 		if(_orders[i]->get_id()==order_id){
-			_orders[i]->pay();
+			order=_orders[i];
 		}
 	}
+	order->pay();
+	//make_transaction(-1*order->get_wholesale_cost());
+	_cash_register+=order->get_retail_price();
 }
 void Emporium::cancel_order(std::string order_id){
 	for(int i=0;i<_orders.size();i++){
@@ -410,3 +414,4 @@ Order* Emporium::get_order(std::string order_id){
 		}
 	}
 }
+
