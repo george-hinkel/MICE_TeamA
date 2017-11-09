@@ -34,6 +34,7 @@ public:
     void fill_order(std::string order_id);
     void pay_order(std::string order_id);
     void cancel_order(std::string order_id);
+    Order* get_order(std::string order_id);
 private:
     std::vector<Item*> _items; //stock of items
     std::vector<User*> _users; //users i.e. servers, customers etc

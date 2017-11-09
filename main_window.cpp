@@ -349,23 +349,12 @@ void Main_window::on_assemble_order_click(){
 	update_display();
 }
 void Main_window::on_view_order_click(){
-	//here
-	std::string orders = _emporium->list_orders(1,1);
+	std::string orders = _emporium->list_orders(0,1);
 	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
-	try{
-		_emporium->list_orders(0,1);
-	}catch(Order::Invalid_status_change e){
-		Dialogs::message(e.what(),"Error!");
-	}
-	Order* order;
-	Serving* serving;
-	//std::string listOrders = _emporium->list_orders(order_id,1);
-	//double price = Serving::get_retail_price();
-	int done_view = Dialogs::question(orders, "Click when done viewing",{"Okay"});
-	//dstring = std::to_string(done_view);
-
-	/*tstring = "Orders...";
-	dstring = _emporium->list_orders(0,1);*/
+	Order* order = _emporium->get_order(order_id);
+	int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"});
+	tstring = "";
+	dstring = "";
 	update_display();
 }
 void Main_window::on_fill_order_click(){

@@ -403,3 +403,10 @@ void Emporium::cancel_order(std::string order_id){
 		}
 	}
 }
+Order* Emporium::get_order(std::string order_id){
+	for(int i=0;i<_orders.size();i++){
+		if(_orders[i]->get_id()==order_id){
+			return _orders[i];
+		}
+	}
+}

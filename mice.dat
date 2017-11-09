@@ -22,6 +22,29 @@ Hersheys brand chocolate syrup
 20
 
 0
+scoop
+Chocolate
+Promise Land Midnight Chocolate Milk(r) flavored creamy goodness!
+0.500000
+1.250000
+20
+file-path
+container
+Large Waffle Cone
+Freshly made yet slightly stale waffle cone
+0.250000
+0.750000
+40
+
+3
+topping
+Raisins
+Why would you get raisins?
+0.100000
+0.200000
+100
+
+0
 end items
 users
 1
@@ -50,6 +73,29 @@ serving
 2
 Large Cup
 Vanilla
+end serving
+end order
+order
+3
+unfilled
+serving
+3
+Large Cup
+Vanilla
+Vanilla
+Chocolate Sauce
+1
+end serving
+serving
+4
+Large Waffle Cone
+Vanilla
+Chocolate
+Vanilla
+Raisins
+2
+Chocolate Sauce
+3
 end serving
 end order
 end orders
