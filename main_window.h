@@ -11,6 +11,7 @@ class Main_window : public Gtk::Window{
         Main_window(Emporium* emporium);
         virtual ~Main_window();
     protected:
+	void on_add_manager_click();
         void on_add_item_click();  
         void on_hire_server_click(); 
         void on_server_report_click();
@@ -60,6 +61,7 @@ class Main_window : public Gtk::Window{
     	Gtk::MenuBar *menubar;
     		Gtk::MenuItem *menuitem_manager;
     		Gtk::Menu *menu_manager;
+			Gtk::MenuItem *menuitem_add_manager;
     			Gtk::MenuItem *menuitem_add_item;
     			Gtk::MenuItem *menuitem_hire_server;
     			Gtk::MenuItem *menuitem_reports;

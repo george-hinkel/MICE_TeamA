@@ -25,6 +25,11 @@ Main_window::Main_window(Emporium* emporium) : _emporium{emporium} {
     Gtk::Menu *menu_manager = Gtk::manage(new Gtk::Menu());
     menuitem_manager->set_submenu(*menu_manager);
 
+	// 		A B O U T  M A N A G E R
+    menuitem_add_manager = Gtk::manage(new Gtk::MenuItem("_Add Manager", true));
+    menuitem_add_manager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_add_manager_click));
+    menu_manager->append(*menuitem_add_manager);
+
     //				A D D   I T E M
     menuitem_add_item = Gtk::manage(new Gtk::MenuItem("_Add Item", true));
     menuitem_add_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_add_item_click));
@@ -259,6 +264,11 @@ Main_window::~Main_window() { }
 // C A L L B A C K S
 // /////////////////
 
+void Main_window::on_add_manager_click(){
+	_emporium->add_user(Dialogs::create_user(2));
+	dstring=_emporium->list_items(0);
+	update_display();
+}
 void Main_window::on_add_item_click(){
 	_emporium->add_item(Dialogs::create_item());
 	dstring=_emporium->list_items(0);
@@ -314,12 +324,12 @@ void Main_window::on_create_serving_click(){
 void Main_window::on_view_serving_click(){
         std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);
-	int done_view = Dialogs::question(serving->to_string(), "Click when ready to fill",{"Ready"});
+	int done_view = Dialogs::question(serving->to_string(), "Ready to fill order?",{"Yes","No"});
 	dstring = std::to_string(done_view);
 	if(done_view==0){
 		on_assemble_order_click();
 	}
-	update_display();
+	//update_display();
 }
 void Main_window::on_assemble_order_click(){
 	int number=0;
@@ -338,7 +348,26 @@ void Main_window::on_assemble_order_click(){
 	dstring = _emporium->list_orders(0,0);
 	update_display();
 }
-void Main_window::on_view_order_click(){};
+void Main_window::on_view_order_click(){
+	//here
+	std::string orders = _emporium->list_orders(1,1);
+	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	try{
+		_emporium->list_orders(0,1);
+	}catch(Order::Invalid_status_change e){
+		Dialogs::message(e.what(),"Error!");
+	}
+	Order* order;
+	Serving* serving;
+	//std::string listOrders = _emporium->list_orders(order_id,1);
+	//double price = Serving::get_retail_price();
+	int done_view = Dialogs::question(orders, "Click when done viewing",{"Okay"});
+	//dstring = std::to_string(done_view);
+
+	/*tstring = "Orders...";
+	dstring = _emporium->list_orders(0,1);*/
+	update_display();
+}
 void Main_window::on_fill_order_click(){
 	std::string orders = _emporium->list_orders(1,1);
 	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");

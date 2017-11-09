@@ -14,7 +14,7 @@ public:
     virtual double get_wholesale_cost();
     virtual std::string to_file_string(int op);
 protected:
-	std::string _type;
+    std::string _type;
     std::string _name;
     std::string _description;
     double _wholesale_cost;

@@ -34,13 +34,22 @@ end users
 orders
 order
 1
-filled
+paid
 serving
 1
 Large Cup
 Vanilla
 Chocolate Sauce
 1
+end serving
+end order
+order
+2
+filled
+serving
+2
+Large Cup
+Vanilla
 end serving
 end order
 end orders
