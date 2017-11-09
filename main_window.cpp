@@ -2,7 +2,7 @@
 using std::vector;
 using std::string;
 
-Main_window::Main_window(Emporium* emporium) : _emporium{emporium} {
+Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_user(user) {
 
     // /////////////////
     // G U I   S E T U P

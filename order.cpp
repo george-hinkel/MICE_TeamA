@@ -30,7 +30,9 @@ std::string Order::to_string(int op){
 	output+=_order_id;
 	output+="\tStatus: '";
 	output+=_status;
-	output+="'\n";
+	output+="'\tPrice: $";
+	output+=std::to_string(get_retail_price());
+	output+="\n";
 	for(int i=0;i<_servings.size();i++){
 		output+="Serving # ";
 		output+=std::to_string(i+1);

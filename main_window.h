@@ -8,7 +8,7 @@
 #include "dialogs.h"
 class Main_window : public Gtk::Window{
     public:
-        Main_window(Emporium* emporium);
+        Main_window(Emporium* emporium,User* user);
         virtual ~Main_window();
     protected:
 	void on_add_manager_click();
@@ -31,7 +31,8 @@ class Main_window : public Gtk::Window{
 	void on_view_order_click();
     private:
     	Emporium* _emporium;
-    
+    	User* _user;
+    	
     	int activeWindow=0;
     	std::vector<Gtk::Entry *> entries;
     	std::vector<Gtk::ComboBoxText *> cboxs;
