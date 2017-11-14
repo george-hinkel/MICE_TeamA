@@ -18,6 +18,7 @@ class Main_window : public Gtk::Window{
         void on_customer_report_click();
         void on_inventory_report_click();
         void on_order_report_click();
+        void on_profit_loss_statement_click();
         void on_create_serving_click();
         void on_view_serving_click();
         void on_assemble_order_click();
@@ -50,6 +51,7 @@ class Main_window : public Gtk::Window{
         Gtk::ToolButton *button_customer_report;
         Gtk::ToolButton *button_inventory_report;
         Gtk::ToolButton *button_order_report;
+        Gtk::ToolButton *button_profit_loss_statement;
         Gtk::ToolButton *button_create_serving;
         Gtk::ToolButton *button_assemble_order;
         Gtk::ToolButton *button_fill_order;
@@ -71,6 +73,7 @@ class Main_window : public Gtk::Window{
     				Gtk::MenuItem *menuitem_customer_report;
     				Gtk::MenuItem *menuitem_inventory_report;
     				Gtk::MenuItem *menuitem_order_report;
+    				Gtk::MenuItem *menuitem_profit_loss_statement;
 			Gtk::MenuItem *menuitem_server;
 			Gtk::Menu *menu_server;
 				Gtk::MenuItem *menuitem_register_customer;

@@ -36,7 +36,7 @@ public:
     void cancel_order(std::string order_id);
     Order* get_order(std::string order_id);
     
-    void make_transaction(double transaction_amount);
+    std::string get_profit_loss_statement();
 private:
     std::vector<Item*> _items; //stock of items
     std::vector<User*> _users; //users i.e. servers, customers etc
@@ -55,6 +55,34 @@ private:
     		void operator+=(double num){
     			_balance = _balance + num;
     			_book.push_back(num);
+    		}
+    		void make_transaction(double num,std::string message){
+    			(*this)+=num;
+    			_history.push_back(message);
+    		}
+    		void annotate_transaction(std::string message){
+    			_history.push_back(message);
+    		}
+    		std::string to_file_string(){
+    			std::string output="";
+    			for(int i=0;i<_book.size();i++){
+    				if(_history[i]!=""){
+    					output+= "wh\n"+std::to_string(_book[i])+"\n"+_history[i]+"\n";	 
+    				}else{
+    					output+= "nh\n"+std::to_string(_book[i])+"\n";
+    				}
+    			}
+    			return output;
+    		}
+    		int size(){
+    			return _book.size();
+    		}
+    		std::string statement(){
+    			std::string output="Total profit = $"+std::to_string(_balance)+"\n";
+    			for(int i=0;i<_book.size();i++){
+    				output+= std::to_string(_book[i])+"\t"+_history[i]+"\n";
+    			}
+    			return output;
     		}
     	private:
     		double _balance;

@@ -34,6 +34,7 @@ class Order
 		void cancel();
 		double pay();
 		std::string to_file_string();
+		std::string order_summary();
 	private:
 		std::vector<Serving*> _servings;
 		std::string _status;

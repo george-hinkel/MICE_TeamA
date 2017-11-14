@@ -13,6 +13,7 @@ public:
     virtual double get_retail_price();
     virtual double get_wholesale_cost();
     virtual std::string to_file_string(int op);
+    double get_stock_wholesale_cost();
 protected:
     std::string _type;
     std::string _name;

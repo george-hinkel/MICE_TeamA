@@ -65,6 +65,11 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menuitem_order_report = Gtk::manage(new Gtk::MenuItem("_Order Report", true));
     menuitem_order_report->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_order_report_click));
     menu_reports->append(*menuitem_order_report);
+    
+    //						P R O F I T   L O S S   S T A T E M E N T
+    menuitem_profit_loss_statement = Gtk::manage(new Gtk::MenuItem("_Profit and Loss Statement", true));
+    menuitem_profit_loss_statement->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_profit_loss_statement_click));
+    menu_reports->append(*menuitem_profit_loss_statement);
 
 	//		S E R V E R
     menuitem_server = Gtk::manage(new Gtk::MenuItem("_Server", true));
@@ -185,6 +190,12 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     button_order_report->set_tooltip_markup("Order Report");
     button_order_report->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_order_report_click));
     toolbar->append(*button_order_report);
+    
+    //		O R D E R   R E P O R T
+    button_profit_loss_statement = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::DND));
+    button_profit_loss_statement->set_tooltip_markup("Profit and Loss Statement");
+    button_profit_loss_statement->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_profit_loss_statement_click));
+    toolbar->append(*button_profit_loss_statement);
 
 	//		C R E A T E   S E R V I N G
     button_create_serving = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::NEW));
@@ -283,6 +294,11 @@ void Main_window::on_server_report_click(){}
 void Main_window::on_customer_report_click(){}
 void Main_window::on_inventory_report_click(){}
 void Main_window::on_order_report_click(){}
+void Main_window::on_profit_loss_statement_click(){
+	tstring = "Profit and Loss Statement...";
+	dstring = _emporium->get_profit_loss_statement();
+	update_display();
+}
 void Main_window::on_create_serving_click(){
 	std::vector<Item*> temp;
 	std::vector<std::string> temps;

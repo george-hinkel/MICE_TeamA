@@ -12,6 +12,7 @@ public:
     double get_retail_price();
     double get_wholesale_cost();
     std::string to_file_string(int op);
+    int get_quantifier();
 private:
     int _quantifier;
     std::string _qualifiers[4] = {"light","normal","extra","drenched"};

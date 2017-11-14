@@ -94,3 +94,10 @@ std::string Order::to_file_string(){
 	output+= "end order\n";
 	return output;
 }
+std::string Order::order_summary(){
+	std::string output="sold: ";
+	for(int i=0;i<_servings.size();i++){
+		output+= "serving "+std::to_string(i)+" "+_servings[i]->serving_summary()+"; ";
+	}
+	return output;
+}

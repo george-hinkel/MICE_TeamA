@@ -73,3 +73,10 @@ std::string Serving::to_file_string(){
 	output+= "end serving\n";
 	return output;
 }
+std::string Serving::serving_summary(){
+	std::string output="";
+	for(int i=0;i<_items.size();i++){
+		output+= "1 x "+_items[i]->get_name()+", ";
+	}
+	return output;
+}

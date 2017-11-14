@@ -125,6 +125,21 @@ void Emporium::read_in_data(){
 					_orders.push_back(order);
 				}
 			}
+		}else if(line=="transactions"){
+			while(line!="end transactions"){
+				getline(file,line);
+				if(line=="wh"){
+					for(int i=0;i<2;i++){
+						getline(file,line);
+						reads.push_back(line);
+					}
+					_cash_register.make_transaction(stod(reads[0]),reads[1]);
+					reads.clear();
+				}else if(line=="nh"){
+					getline(file,line);
+					_cash_register.make_transaction(stod(line),"n/a");
+				}
+			}
 		}
 	}
 	_next_serving_id = max_serving_id+1;
@@ -150,6 +165,11 @@ void Emporium::write_out_data(){
 		file << _orders[i]->to_file_string();
 	}
 	if(_orders.size()!=0) file << "end orders" << std::endl;
+	if(_cash_register.size()!=0){
+		file << "transactions" << std::endl;
+		file << _cash_register.to_file_string();
+		file << "end transactions" << std::endl;
+	}
 	file.close();
 }
 void Emporium::add_user(User* user){
@@ -174,6 +194,9 @@ std::string Emporium::list_users(){
 }
 void Emporium::add_item(Item* item){
 	_items.push_back(item);
+	double num = -1*item->get_stock_wholesale_cost();
+	std::string message = std::to_string(item->get_stock_remaining())+" x "+item->get_name()+" purchased and stocked.";
+	_cash_register.make_transaction(num,message);
 }
 Item* Emporium::get_item(std::string name){
 	for(int i=0;i<_items.size();i++){
@@ -269,14 +292,17 @@ std::vector<std::string> Emporium::get_item_names_vector(int op){
 Item* Emporium::create_item_instance(Item* item){
 	Item* instance;
 	if(item->get_type()=="container"){
+		item->modify_stock(-1);
 		instance = (Mice::Container*)malloc(sizeof(Mice::Container));
 		Mice::Container* container = (Mice::Container*)item;
 		instance=new Mice::Container(*container);
 	}else if(item->get_type()=="scoop"){
+		item->modify_stock(-1);
 		instance = (Scoop*)malloc(sizeof(Scoop));
 		Scoop* scoop = (Scoop*)item;
 		instance=new Scoop(*scoop);
 	}else if(item->get_type()=="topping"){
+		item->modify_stock(-1*static_cast<Topping*>(item)->get_quantifier());
 		instance = (Topping*)malloc(sizeof(Topping));
 		Topping* topping = (Topping*)item;
 		instance=new Topping(*topping);
@@ -323,7 +349,6 @@ void Emporium::delete_serving(Serving* serving){
 	}
 	if(index!=-1){
 		_unassigned_servings.erase(_unassigned_servings.begin()+index);
-		//free(serving);
 	}
 }
 void Emporium::assemble_order(std::vector<int> serving_indexes){
@@ -397,8 +422,7 @@ void Emporium::pay_order(std::string order_id){
 		}
 	}
 	order->pay();
-	//make_transaction(-1*order->get_wholesale_cost());
-	_cash_register+=order->get_retail_price();
+	_cash_register.make_transaction(order->get_retail_price(),order->order_summary());
 }
 void Emporium::cancel_order(std::string order_id){
 	for(int i=0;i<_orders.size();i++){
@@ -414,4 +438,6 @@ Order* Emporium::get_order(std::string order_id){
 		}
 	}
 }
-
+std::string Emporium::get_profit_loss_statement(){
+	return _cash_register.statement();
+}

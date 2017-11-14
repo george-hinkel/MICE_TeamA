@@ -1,101 +1,25 @@
 items
 scoop
 Vanilla
-Delicious Homemade Vanilla
-0.100000
-0.500000
+Delicious Vanilla Ice Cream
+0.750000
+1.500000
 20
 file-path
 container
-Large Cup
-Cup to hold your scoops!
-0.100000
+Bowl
+Bowl that holds ice cream
+0.500000
 0.750000
 20
-
-5
-topping
-Chocolate Sauce
-Hersheys brand chocolate syrup
-0.500000
-1.000000
-20
-
-0
-scoop
-Chocolate
-Promise Land Midnight Chocolate Milk(r) flavored creamy goodness!
-0.500000
-1.250000
-20
-file-path
-container
-Large Waffle Cone
-Freshly made yet slightly stale waffle cone
-0.250000
-0.750000
-40
 
 3
 topping
-Raisins
-Why would you get raisins?
-0.100000
-0.200000
-100
+Chocolate Syrup
+Hershey's brand chocolate syrup
+0.250000
+0.750000
+20
 
 0
 end items
-users
-1
-ghinkel
-pswd1010
-George
-100
-18.250000
-end users
-orders
-order
-1
-paid
-serving
-1
-Large Cup
-Vanilla
-Chocolate Sauce
-1
-end serving
-end order
-order
-2
-paid
-serving
-2
-Large Cup
-Vanilla
-end serving
-end order
-order
-3
-unfilled
-serving
-3
-Large Cup
-Vanilla
-Vanilla
-Chocolate Sauce
-1
-end serving
-serving
-4
-Large Waffle Cone
-Vanilla
-Chocolate
-Vanilla
-Raisins
-2
-Chocolate Sauce
-3
-end serving
-end order
-end orders

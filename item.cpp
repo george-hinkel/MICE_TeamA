@@ -35,3 +35,6 @@ std::string Item::to_file_string(int op){
 		return _name+"\n";
 	}
 }
+double Item::get_stock_wholesale_cost(){
+	return _wholesale_cost*_stock_remaining;
+}
