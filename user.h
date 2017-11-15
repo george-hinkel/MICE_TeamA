@@ -12,6 +12,7 @@ public:
     int get_privilege();
     virtual std::string to_string();
     virtual std::string to_file_string();
+    std::string get_name();
 protected:
     std::string _username;
     std::string _password;

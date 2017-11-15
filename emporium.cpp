@@ -3,6 +3,10 @@
 #include <iostream>
 Emporium::Emporium(std::string library_file_location) : _library_file_location{library_file_location} {
     read_in_data();
+    if(_users.size()==0){
+    	User* default_manager = new Manager("admin","admin","admin");
+    	add_user(default_manager);
+    }
 }
 void Emporium::read_in_data(){
 	std::ifstream file;
@@ -181,9 +185,19 @@ User* Emporium::get_user(std::string username){
 			return _users[i];
 		}
 	}
-	User* null_user = (User*)malloc(sizeof(User));
-	null_user = new User("NULL","NULL","NULL");
+	User* null_user = new User("NULL","NULL","NULL");
 	return null_user;
+}
+void Emporium::delete_user(std::string username){
+	int index=-1;
+	for(int i=0;i<_users.size();i++){
+		if(_users[i]->get_username()==username){
+			index=i;
+		}
+	}
+	if(index!=-1){
+		_users.erase(_users.begin()+index);
+	}
 }
 std::string Emporium::list_users(){
 	std::string output="";

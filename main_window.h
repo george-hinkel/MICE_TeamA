@@ -78,7 +78,7 @@ class Main_window : public Gtk::Window{
 			Gtk::Menu *menu_server;
 				Gtk::MenuItem *menuitem_register_customer;
 				Gtk::MenuItem *menuitem_s_create_serving;
-                                Gtk::MenuItem *menuitem_s_view_serving;
+                Gtk::MenuItem *menuitem_s_view_serving;
 				Gtk::MenuItem *menuitem_s_assemble_order;
 				Gtk::MenuItem *menuitem_fill_order;
 				Gtk::MenuItem *menuitem_checkout_order;

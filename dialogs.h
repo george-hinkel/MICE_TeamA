@@ -4,6 +4,7 @@
 #include <iostream>
 #include <gtkmm.h>
 #include "mice.h"
+#include "emporium.h"
 using namespace std;
 
 class Dialogs {
@@ -27,5 +28,6 @@ class Dialogs {
     
     static User* create_user(int user_type); 
     	//0=customer;1=server;2=manager
+    static User* login(Emporium* emporium);
 };
 #endif
