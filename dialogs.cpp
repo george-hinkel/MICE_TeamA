@@ -14,9 +14,8 @@ void Dialogs::message(string msg, string title) {
 
 // A question is a message that allows the user to respond with a button
 int Dialogs::question(string msg, string title,
-             vector<string> buttons) {
-    Gtk::Dialog *dialog = new Gtk::Dialog();
-    dialog->set_title(title);
+             vector<string> buttons,Gtk::Window& parent) {
+    Gtk::Dialog *dialog = new Gtk::Dialog(title,parent);
 
     //Gtk::Label *label = new Gtk::Label(msg);
     Gtk::Label *label = new Gtk::Label();
@@ -101,13 +100,12 @@ void Dialogs::image(string filename, string title, string msg) {
     return;
 }
 
-Item* Dialogs::create_item(){
+Item* Dialogs::create_item(Gtk::Window& parent){
 	int item_type=-1;
-	item_type = question("Creating an item...","Decide which kind of item to create!",{"Scoop","Container","Topping"});
+	item_type = question("Creating an item...","Decide which kind of item to create!",{"Scoop","Container","Topping"},parent);
 	Item* item = (Item*)malloc(sizeof(Item));
 	vector<string> output;
-	Gtk::Dialog *dialog = new Gtk::Dialog();
-    dialog->set_title("Creating a new item...");
+	Gtk::Dialog *dialog = new Gtk::Dialog("Creating a new item...",parent);
     
     dialog->add_button("Cancel", 0);
     dialog->add_button("OK", 1);
@@ -193,6 +191,22 @@ Item* Dialogs::create_item(){
     initial_stockE->show();
     initial_stockB->pack_start(*initial_stockE);
     
+    //image file path entry
+    Gtk::HBox *image_file_pathB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*image_file_pathB);
+    image_file_pathB->set_homogeneous();
+    image_file_pathB->show();
+    
+    Gtk::Label *image_file_pathP = new Gtk::Label("Image File Path:");
+    image_file_pathB->pack_start(*image_file_pathP);
+    image_file_pathP->show();
+    
+    Gtk::Entry *image_file_pathE = new Gtk::Entry{};
+    image_file_pathE->set_text("image_file_path.png");
+    image_file_pathE->set_max_length(100);
+    image_file_pathE->show();
+    image_file_pathB->pack_start(*image_file_pathE);
+    
     //max scoops entry
     Gtk::HBox *max_scoopsB = new Gtk::HBox();
     dialog->get_vbox()->pack_start(*max_scoopsB);
@@ -239,6 +253,7 @@ Item* Dialogs::create_item(){
     output.push_back(wholesale_costE->get_text());
     output.push_back(retail_priceE->get_text());
     output.push_back(initial_stockE->get_text());
+    output.push_back(image_file_pathE->get_text());
     if(item_type==1)
     output.push_back(max_scoopsE->get_text());
     if(item_type==2)
@@ -261,6 +276,9 @@ Item* Dialogs::create_item(){
     delete initial_stockP;
     delete initial_stockE;
     delete initial_stockB;
+    delete image_file_pathP;
+    delete image_file_pathE;
+    delete image_file_pathB;
     delete max_scoopsP;
     delete max_scoopsE;
     delete max_scoopsB;
@@ -270,20 +288,22 @@ Item* Dialogs::create_item(){
     delete dialog;
 	
 	switch(item_type){
-		case 0: item = new Scoop(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]));
+		case 0: item = new Scoop(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),output[5]);
 			break;
-		case 1: item = new Mice::Container(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),"",stoi(output[5]));
+		case 1: item = new Mice::Container(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),output[5],stoi(output[6]));
 			break;
-		case 2: item = new Topping(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),"",stoi(output[5]));
+		case 2: item = new Topping(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),output[5],stoi(output[6]));
 			break;
 		default: item = new Item("NULL","NULL",0,0,0);
 			break;
 	}
 	
-    if (result == 1)
+    if (result == 1){
         return item;
-    else
+    }else{
+    	item = new Item("NULL","NULL",0,0,0);
         return item;
+    }
 }
 User* Dialogs::create_user(int user_type){
 	User* user = (User*)malloc(sizeof(User));

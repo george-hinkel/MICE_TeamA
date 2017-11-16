@@ -38,3 +38,6 @@ std::string Item::to_file_string(int op){
 double Item::get_stock_wholesale_cost(){
 	return _wholesale_cost*_stock_remaining;
 }
+std::string Item::get_image_file_path(){
+	return _image_file_path;
+}

@@ -11,7 +11,7 @@ class Main_window : public Gtk::Window{
         Main_window(Emporium* emporium,User* user);
         virtual ~Main_window();
     protected:
-	void on_add_manager_click();
+		void on_add_manager_click();
         void on_add_item_click();  
         void on_hire_server_click(); 
         void on_server_report_click();
@@ -29,7 +29,7 @@ class Main_window : public Gtk::Window{
         void on_quit_click();
         void on_verify_serving_click();
         void on_register_customer_click();
-	void on_view_order_click();
+		void on_view_order_click();
     private:
     	Emporium* _emporium;
     	User* _user;
@@ -37,11 +37,15 @@ class Main_window : public Gtk::Window{
     	int activeWindow=0;
     	std::vector<Gtk::Entry *> entries;
     	std::vector<Gtk::ComboBoxText *> cboxs;
+    	std::vector<Gtk::Box *> vboxes;
         void update_display();                    // Update display
+        void display_items();
         Gtk::Box *vbox;
         Gtk::Box *displayBox;
         Glib::ustring tstring;
         Glib::ustring dstring;
+        
+        Gtk::ScrolledWindow *displayWindow;
         Gtk::Label *display;  	// Display
         Gtk::Label *msg;  		// Status message display
         

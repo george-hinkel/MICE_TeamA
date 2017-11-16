@@ -14,8 +14,8 @@ class Dialogs {
     static void message(string msg, string title = "Info");
 
     // A question is a message that allows the user to respond with a button
-    static int question(string msg, string title = "Question",
-                 vector<string> buttons = {"Cancel", "OK"});
+    static int question(string msg, string title,
+                 vector<string> buttons,Gtk::Window& parent);
 
     // A request for a line of text input
     static string input(string msg, string title = "Input", string default_text = "", 
@@ -24,7 +24,7 @@ class Dialogs {
     // Display an image from a disk file
     static void image(string filename, string title = "Image", string msg = "");
     
-    static Item* create_item();
+    static Item* create_item(Gtk::Window& parent);
     
     static User* create_user(int user_type); 
     	//0=customer;1=server;2=manager

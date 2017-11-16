@@ -245,23 +245,28 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
 
     // D I S P L A Y
     // Provide a label to display things
+    displayWindow = Gtk::manage(new Gtk::ScrolledWindow());
+    displayWindow->set_border_width(10);
+    displayWindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
+    vbox->pack_start(*displayWindow);
     display = Gtk::manage(new Gtk::Label());
     // display->set_has_frame(false);
     display->set_hexpand(true);
-    vbox->add(*display);
     
     // S T A T U S   B A R   D I S P L A Y
     // Provide a status bar for game messages
     msg = Gtk::manage(new Gtk::Label());
     msg->set_hexpand(true);
-    msg->set_vexpand(true);
-    vbox->add(*msg);
+    //msg->set_vexpand(true);
 	
 	// D I S P L A Y   B O X
 	// Provide a display box for entries and comboboxtexts
 	displayBox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-	displayBox->show_all();
-    vbox->pack_start(*displayBox);
+	
+    displayWindow->add(*displayBox);
+    displayBox->pack_start(*display);
+    displayBox->pack_start(*msg);
+    displayBox->show_all();
     // Make the box and everything in it visible
     vbox->show_all();
 	if(user->get_privilege()<2){
@@ -298,9 +303,11 @@ void Main_window::on_add_manager_click(){
 	update_display();
 }
 void Main_window::on_add_item_click(){
-	_emporium->add_item(Dialogs::create_item());
-	dstring=_emporium->list_items(0);
-	update_display();
+	Item* item=Dialogs::create_item(*this);
+	if(item->get_name()!="NULL") _emporium->add_item(item);
+	//dstring=_emporium->list_items(0);
+	//update_display();
+	display_items();
 }
 void Main_window::on_hire_server_click(){
 	User* user = Dialogs::create_user(1);
@@ -328,7 +335,7 @@ void Main_window::on_create_serving_click(){
 	//add a container
 	temp = _emporium->get_items_vector(1);
 	temps= _emporium->get_item_names_vector(1);
-	index = Dialogs::question(_emporium->list_items(1),"Choose a container",temps);
+	index = Dialogs::question(_emporium->list_items(1),"Choose a container",temps,*this);
 	_emporium->create_item_instance(temp[index]);
 	
 	//add 1-N scoops
@@ -336,7 +343,7 @@ void Main_window::on_create_serving_click(){
 	temps= _emporium->get_item_names_vector(2);
 	number=stoi(Dialogs::input("How many scoops would you like?","Choose number of scoops","1","1"));
 	for(int i=0;i<number;i++){
-		index = Dialogs::question(_emporium->list_items(2),"Choose a scoop",temps);
+		index = Dialogs::question(_emporium->list_items(2),"Choose a scoop",temps,*this);
 		_emporium->create_item_instance(temp[index]);
 	}
 	
@@ -345,9 +352,9 @@ void Main_window::on_create_serving_click(){
 	temps= _emporium->get_item_names_vector(3);
 	number=stoi(Dialogs::input("How many toppings would you like?","Choose number of toppings","0","0"));
 	for(int i=0;i<number;i++){
-		index = Dialogs::question(_emporium->list_items(2),"Choose a topping",temps);
+		index = Dialogs::question(_emporium->list_items(2),"Choose a topping",temps,*this);
 		tempitem=_emporium->create_item_instance(temp[index]);
-		static_cast<Topping*>(tempitem)->change_quantifier(Dialogs::question("Choose topping intensity","Choose a topping",qualifiers));
+		static_cast<Topping*>(tempitem)->change_quantifier(Dialogs::question("Choose topping intensity","Choose a topping",qualifiers,*this));
 	}
 	
 	_emporium->assemble_serving();
@@ -358,7 +365,7 @@ void Main_window::on_create_serving_click(){
 void Main_window::on_view_serving_click(){
         std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);
-	int done_view = Dialogs::question(serving->to_string(), "Ready to fill order?",{"Yes","No"});
+	int done_view = Dialogs::question(serving->to_string(), "Ready to fill order?",{"Yes","No"},*this);
 	dstring = std::to_string(done_view);
 	if(done_view==0){
 		on_assemble_order_click();
@@ -386,7 +393,7 @@ void Main_window::on_view_order_click(){
 	std::string orders = _emporium->list_orders(0,1);
 	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
 	Order* order = _emporium->get_order(order_id);
-	int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"});
+	int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"},*this);
 	tstring = "";
 	dstring = "";
 	update_display();
@@ -447,9 +454,9 @@ void Main_window::on_run_test_click(){
     dstring = container->to_file_string(0);
     Login login;
     */
-    dstring = _emporium->list_orders(0,1);
-    update_display();
-    
+    //dstring = _emporium->list_orders(0,1);
+    //update_display();
+    display_items();
 }
 void Main_window::on_quit_click(){
 	_emporium->write_out_data();
@@ -458,7 +465,7 @@ void Main_window::on_quit_click(){
 void Main_window::on_verify_serving_click(){
 	std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);
-	int op = Dialogs::question(serving->to_string(),"Is your serving correct?",{"Yes","No"});
+	int op = Dialogs::question(serving->to_string(),"Is your serving correct?",{"Yes","No"},*this);
 	dstring = std::to_string(op);
 	update_display();
 	if(op==1){
@@ -481,5 +488,23 @@ void Main_window::update_display() {
     // s collects the status message
     display->set_markup(tstring);
     msg->set_markup(dstring);
+}
+void Main_window::display_items(){
+	std::vector<Item*> items = _emporium->get_items_vector(0);
+	tstring = "Items...";
+	dstring = "";
+	Gtk::Box* item_box;
+	Gtk::Image *item_image;
+	update_display();
+	for(int i=0;i<items.size();i++){
+		item_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+		item_image = new Gtk::Image{items[i]->get_image_file_path()};
+		item_box->pack_start(*item_image);
+		Gtk::Label *item_label = Gtk::manage(new Gtk::Label(items[i]->to_string()));
+		item_box->pack_start(*item_label);
+		vboxes.push_back(item_box);
+		displayBox->pack_start(*item_box);
+	}
+	displayBox->show_all();
 }
 

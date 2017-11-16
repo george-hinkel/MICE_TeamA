@@ -5,14 +5,14 @@ Delicious Vanilla Ice Cream
 0.750000
 1.500000
 20
-file-path
+images/Vanilla.jpg
 container
 Bowl
 Bowl that holds ice cream
 0.500000
 0.750000
 20
-
+images/Bowl.jpg
 3
 topping
 Chocolate Syrup
@@ -20,8 +20,23 @@ Hershey's brand chocolate syrup
 0.250000
 0.750000
 20
-
+images/ChocoSyrup.png
 0
+scoop
+Chocolate
+Chocolate Icecream, what else?
+0.500000
+1.250000
+20
+images/Chocolate.jpeg
+container
+Plastic Bag
+A plastic bag that you eat ice cream out of. Is it hipster or hobo? You decide.
+0.100000
+6.250000
+200
+images/Plastic_Bag.jpg
+5
 end items
 users
 2
@@ -52,3 +67,14 @@ name
 100
 8.250000
 end users
+transactions
+wh
+-10.000000
+20 x Chocolate purchased and stocked.
+wh
+-0.000000
+0 x name purchased and stocked.
+wh
+-20.000000
+200 x Plastic Bag purchased and stocked.
+end transactions
