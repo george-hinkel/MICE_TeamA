@@ -234,7 +234,7 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     
     //		R U N   T E S T
     button_run_test = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::EXECUTE));
-    button_run_test->set_tooltip_markup("Run Test");
+    button_run_test->set_tooltip_markup("Display Items");
     button_run_test->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_run_test_click));
     toolbar->append(*button_run_test);
 

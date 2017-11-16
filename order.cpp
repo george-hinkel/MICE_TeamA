@@ -83,6 +83,7 @@ double Order::pay(){
 	if(_status=="filled"){
 		_status="paid";
 	}else{
+	//STATE MACHINE implemented with exceptions and handled in Main_window
 		throw Invalid_status_change(_status,"paid");
 	}
 }
