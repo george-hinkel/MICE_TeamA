@@ -2,13 +2,13 @@
 using std::vector;
 using std::string;
 
-Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_user(user) {
-
+Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_user{user} {
+	
     // /////////////////
     // G U I   S E T U P
     // /////////////////
 
-    set_default_size(800, 400);
+    set_default_size(1080, 720);
 
     // Put a vertical box container as the Window contents
     vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
@@ -25,7 +25,7 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     Gtk::Menu *menu_manager = Gtk::manage(new Gtk::Menu());
     menuitem_manager->set_submenu(*menu_manager);
 
-	// 		A B O U T  M A N A G E R
+	// 		A D D  M A N A G E R
     menuitem_add_manager = Gtk::manage(new Gtk::MenuItem("_Add Manager", true));
     menuitem_add_manager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_add_manager_click));
     menu_manager->append(*menuitem_add_manager);
@@ -264,8 +264,24 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     vbox->pack_start(*displayBox);
     // Make the box and everything in it visible
     vbox->show_all();
-
-    
+	if(user->get_privilege()<2){
+		menuitem_manager->hide();
+		button_server_report->hide();
+        button_customer_report->hide();
+        button_inventory_report->hide();
+        button_order_report->hide();
+        button_profit_loss_statement->hide();
+        button_add_item->hide();
+        button_hire_server->hide();
+	}
+	if(user->get_privilege()<1){
+		menuitem_server->hide();
+		button_fill_order->hide();
+        button_checkout_order->hide();
+	}
+    if(_user->get_username()=="admin"){
+    	_emporium->delete_user("admin");
+    }
 }
 
 
@@ -276,8 +292,9 @@ Main_window::~Main_window() { }
 // /////////////////
 
 void Main_window::on_add_manager_click(){
-	_emporium->add_user(Dialogs::create_user(2));
-	dstring=_emporium->list_items(0);
+	User* user = Dialogs::create_user(2);
+	if(user->get_username()!="NULL") _emporium->add_user(user);
+	dstring=_emporium->list_users();
 	update_display();
 }
 void Main_window::on_add_item_click(){
@@ -286,7 +303,8 @@ void Main_window::on_add_item_click(){
 	update_display();
 }
 void Main_window::on_hire_server_click(){
-	_emporium->add_user(Dialogs::create_user(1));
+	User* user = Dialogs::create_user(1);
+	if(user->get_username()!="NULL") _emporium->add_user(user);
 	dstring=_emporium->list_users();
 	update_display();
 }
@@ -454,7 +472,8 @@ void Main_window::on_verify_serving_click(){
 	}
 }
 void Main_window::on_register_customer_click(){
-	_emporium->add_user(Dialogs::create_user(0));
+	User* user = Dialogs::create_user(0);
+	if(user->get_username()!="NULL") _emporium->add_user(user);
 	dstring=_emporium->list_users();
 	update_display();
 }

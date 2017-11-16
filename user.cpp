@@ -22,3 +22,6 @@ std::string User::to_string(){
 std::string User::to_file_string(){
 	return std::to_string(_privilege)+"\n"+_username+"\n"+_password+"\n"+_name+"\n";
 }
+std::string User::get_name(){
+	return _name;
+}

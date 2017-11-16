@@ -4,6 +4,5 @@
 class Manager : public User{
 	public:
 		Manager(std::string username,std::string password,std::string name);
-		std::string get_name();
 };
 #endif

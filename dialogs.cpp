@@ -449,3 +449,96 @@ User* Dialogs::create_user(int user_type){
     else
         return user;
 }
+User* Dialogs::login(Emporium* emporium) {
+	bool valid_username=false;
+	User* user=emporium->get_user("admin");
+	int result;
+	string text;
+	User* null_user;
+	if(user->get_username()=="admin"){
+		return user;
+	}
+	while(!valid_username){
+    	Gtk::Dialog *dialog = new Gtk::Dialog();
+    	dialog->set_title("Login");
+
+    	Gtk::Label *label = new Gtk::Label("Enter username:");
+    	dialog->get_content_area()->pack_start(*label);
+    	label->show();
+
+    	dialog->add_button("Cancel", 0);
+    	dialog->add_button("OK", 1);
+    	dialog->set_default_response(1);
+	
+    	Gtk::Entry *entry = new Gtk::Entry{};
+    	entry->set_text("username");
+    	entry->set_max_length(50);
+    	entry->show();
+    	dialog->get_vbox()->pack_start(*entry);
+
+    	result = dialog->run();
+    	text = entry->get_text();
+
+    	dialog->close();
+    	while (Gtk::Main::events_pending())  Gtk::Main::iteration();
+
+    	delete entry;
+    	delete label;
+    	delete dialog;
+    	
+    	
+    	if(result==0){
+    		null_user = new User("NULL","NULL","Cancelled ");
+    		return null_user;
+    	}else{
+    		user=emporium->get_user(text); 
+    		if(user->get_username()=="NULL"){
+    			valid_username=false;
+    		}else{
+    			valid_username=true;
+    		}
+    	}
+	}
+	int tries_left = 5;
+	while(tries_left>0){
+		Gtk::Dialog *dialog = new Gtk::Dialog();
+    	dialog->set_title("Login");
+
+    	Gtk::Label *label = new Gtk::Label("Enter password for "+user->get_username());
+    	dialog->get_content_area()->pack_start(*label);
+    	label->show();
+
+    	dialog->add_button("Cancel", 0);
+    	dialog->add_button("OK", 1);
+    	dialog->set_default_response(1);
+	
+    	Gtk::Entry *entry = new Gtk::Entry{};
+    	entry->set_text("password");
+    	entry->set_max_length(50);
+    	entry->show();
+    	dialog->get_vbox()->pack_start(*entry);
+
+    	result = dialog->run();
+    	text = entry->get_text();
+
+    	dialog->close();
+    	while (Gtk::Main::events_pending())  Gtk::Main::iteration();
+
+    	delete entry;
+    	delete label;
+    	delete dialog;
+    	
+    	if(result==0){
+    		null_user = new User("NULL","NULL","Cancelled ");
+			return null_user;
+    	}else{
+    		if(user->is_password(text)){
+    			return user;
+    		}else{
+    			tries_left--;
+    		}
+		}
+	}
+	null_user = new User("NULL","NULL","Failed ");
+	return null_user;
+}

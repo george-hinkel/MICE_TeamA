@@ -14,6 +14,7 @@ public:
     
     void add_user(User* user);
     User* get_user(std::string username);
+    void delete_user(std::string username);
     std::string list_users();
     
     void add_item(Item* item);

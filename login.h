@@ -1,18 +1,14 @@
 #ifndef __login_h
 #define __login_h
-#include <string>
-#include <iostream>
 #include <vector>
-
+#include "emporium.h"
+#include "dialogs.h"
 class Login{
   public:
-    void verify();
-    std::string userName = "manager";
-    std::string password = "password";
+  	Login(Emporium* emporium);
+  	User* get_current_user();
 
   private:
-    
-    std::string attemptUser;
-    std::string attemptPass;
+    User* _current_user;
 };
 #endif

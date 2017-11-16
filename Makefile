@@ -45,6 +45,6 @@ manager.o: manager.cpp manager.h
 emporium.o: emporium.cpp emporium.h
 	$(CXX) $(CXXFLAGS) -c emporium.cpp
 login.o: login.cpp login.h
-	$(CXX) $(CXXFLAGS) -c login.cpp
+	$(CXX) $(CXXFLAGS) -c login.cpp `pkg-config gtkmm-3.0 --cflags --libs`
 clean:
 	-rm -f *.o *~ main

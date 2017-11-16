@@ -23,3 +23,32 @@ Hershey's brand chocolate syrup
 
 0
 end items
+users
+2
+username
+password
+Default
+1
+ghinkel
+password
+George Hinkel
+100
+8.250000
+0
+customer
+password
+Valued Customer
+555-555-5555
+1
+server
+password
+Loyal Server
+100
+8.250000
+1
+username
+password
+name
+100
+8.250000
+end users
