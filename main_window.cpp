@@ -40,6 +40,11 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menuitem_hire_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_hire_server_click));
     menu_manager->append(*menuitem_hire_server);
 
+	//				C H A N G E   S E R V E R   S A L A R Y
+    menuitem_change_server_salary = Gtk::manage(new Gtk::MenuItem("_Change Server Salary", true));
+    menuitem_change_server_salary->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_change_server_salary_click));
+    menu_manager->append(*menuitem_change_server_salary);
+    
     //				R E P O R T S
     menuitem_reports = Gtk::manage(new Gtk::MenuItem("_Reports", true));
     menu_manager->append(*menuitem_reports);
@@ -299,35 +304,37 @@ Main_window::~Main_window() { }
 void Main_window::on_add_manager_click(){
 	User* user = Dialogs::create_user(2);
 	if(user->get_username()!="NULL") _emporium->add_user(user);
-	dstring=_emporium->list_users();
-	update_display();
+	dstring=_emporium->list_users(3);
+	update_display(0);
 }
 void Main_window::on_add_item_click(){
 	Item* item=Dialogs::create_item(*this);
 	if(item->get_name()!="NULL") _emporium->add_item(item);
-	//dstring=_emporium->list_items(0);
-	//update_display();
-	display_items();
+	update_display(1);
 }
 void Main_window::on_hire_server_click(){
 	User* user = Dialogs::create_user(1);
 	if(user->get_username()!="NULL") _emporium->add_user(user);
-	dstring=_emporium->list_users();
-	update_display();
+	dstring=_emporium->list_users(2);
+	update_display(0);
 }
-void Main_window::on_server_report_click(){}
+void Main_window::on_server_report_click(){
+	tstring = "Server Report...";
+	dstring = _emporium->get_server_report();
+	update_display(0);
+}
 void Main_window::on_customer_report_click(){}
 void Main_window::on_inventory_report_click(){
 	// words go here
 	tstring = "Inventory Report...";
-	//dstring = Item::to_file_string(2);
-	update_display();
+	dstring = _emporium->get_inventory_report();
+	update_display(0);
 }
 void Main_window::on_order_report_click(){}
 void Main_window::on_profit_loss_statement_click(){
 	tstring = "Profit and Loss Statement...";
 	dstring = _emporium->get_profit_loss_statement();
-	update_display();
+	update_display(0);
 }
 void Main_window::on_create_serving_click(){
 	std::vector<Item*> temp;
@@ -365,7 +372,7 @@ void Main_window::on_create_serving_click(){
 	_emporium->assemble_serving();
 	
 	dstring=_emporium->list_servings();
-	update_display();
+	update_display(0);
 }
 void Main_window::on_view_serving_click(){
         std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
@@ -375,7 +382,6 @@ void Main_window::on_view_serving_click(){
 	if(done_view==0){
 		on_assemble_order_click();
 	}
-	//update_display();
 }
 void Main_window::on_assemble_order_click(){
 	int number=0;
@@ -392,7 +398,7 @@ void Main_window::on_assemble_order_click(){
 	_emporium->assemble_order(serving_indexes);
 	tstring = "Orders...";
 	dstring = _emporium->list_orders(0,0);
-	update_display();
+	update_display(0);
 }
 void Main_window::on_view_order_click(){
 	std::string orders = _emporium->list_orders(0,1);
@@ -401,7 +407,7 @@ void Main_window::on_view_order_click(){
 	int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"},*this);
 	tstring = "";
 	dstring = "";
-	update_display();
+	update_display(0);
 }
 void Main_window::on_fill_order_click(){
 	std::string orders = _emporium->list_orders(1,1);
@@ -413,7 +419,7 @@ void Main_window::on_fill_order_click(){
 	}
 	tstring = "Orders...";
 	dstring = _emporium->list_orders(0,1);
-	update_display();
+	update_display(0);
 }
 void Main_window::on_checkout_order_click(){
 	std::string orders = _emporium->list_orders(2,1);
@@ -425,7 +431,7 @@ void Main_window::on_checkout_order_click(){
 	}
 	tstring = "Orders...";
 	dstring = _emporium->list_orders(0,1);
-	update_display();
+	update_display(0);
 }
 void Main_window::on_cancel_order_click(){
 	std::string orders = _emporium->list_orders(1,1);
@@ -437,31 +443,10 @@ void Main_window::on_cancel_order_click(){
 	}
 	tstring = "Orders...";
 	dstring = _emporium->list_orders(0,1);
-	update_display();
+	update_display(0);
 }
 void Main_window::on_run_test_click(){
-	/*
-	std::string output;
-	Mice::Container* container=(Mice::Container*)malloc(sizeof(Container));
-	container = new Mice::Container("Waffle Cone","Delicious freshly made waffle cone",0.25,0.9,10,"file-path");
-	Scoop* scoop = (Scoop*)malloc(sizeof(Scoop));
-    scoop = new Scoop("Vanilla","Delicious homemade vanilla ice cream scoop",0.8,1.5,10);
-    Topping* topping = (Topping*)malloc(sizeof(Topping));
-    topping = new Topping("Chocolate Syrup","Rich 100% milk chocolate syrup",0.1,0.25,10);
-    _emporium->add_item(container);
-    _emporium->add_item(scoop);
-    _emporium->add_item(topping);
-    _emporium->create_item_instance(container);
-    _emporium->create_item_instance(scoop);
-    _emporium->create_item_instance(topping);
-    _emporium->assemble_serving();
-    //dstring = _emporium->list_servings();
-    dstring = container->to_file_string(0);
-    Login login;
-    */
-    //dstring = _emporium->list_orders(0,1);
-    //update_display();
-    display_items();
+    update_display(1);
 }
 void Main_window::on_quit_click(){
 	_emporium->write_out_data();
@@ -472,7 +457,7 @@ void Main_window::on_verify_serving_click(){
 	Serving* serving = _emporium->get_serving(serving_id);
 	int op = Dialogs::question(serving->to_string(),"Is your serving correct?",{"Yes","No"},*this);
 	dstring = std::to_string(op);
-	update_display();
+	update_display(0);
 	if(op==1){
 		_emporium->delete_serving(serving);
 		on_create_serving_click();
@@ -481,18 +466,42 @@ void Main_window::on_verify_serving_click(){
 void Main_window::on_register_customer_click(){
 	User* user = Dialogs::create_user(0);
 	if(user->get_username()!="NULL") _emporium->add_user(user);
-	dstring=_emporium->list_users();
-	update_display();
+	dstring=_emporium->list_users(1);
+	update_display(0);
+}
+void Main_window::on_change_server_salary_click(){
+	Server* server;
+	std::vector<User*> servers = _emporium->get_users_vector(2);
+	std::vector<std::string> servers_names = _emporium->get_users_name_vector(2);
+	int server_index = Dialogs::question("Choose whose salary to change.","Changing Server Salary...",servers_names,*this);
+	server=(Server*)servers[server_index];
+	std::string msg = "Old salary: "+std::to_string(server->get_hourly_wage())+"\nChoose a new salary!";
+	double new_salary = stod(Dialogs::input(msg,"Set New Salary...","0.00",std::to_string(server->get_hourly_wage())));
+	if(new_salary!=server->get_hourly_wage()){
+		server->set_hourly_wage(new_salary);
+	}
 }
 
 // /////////////////
 // U T I L I T I E S
 // /////////////////
 
-void Main_window::update_display() {
+void Main_window::update_display(int op) {
     // s collects the status message
-    display->set_markup(tstring);
-    msg->set_markup(dstring);
+    if(op==1){
+		display_items();
+	}else{
+		for(Gtk::Box* box : item_boxes){
+			box->hide();
+			delete box;
+		}
+		item_boxes.clear();
+	}
+    if(op>=0){
+    	display->set_markup(tstring);
+    	msg->set_markup(dstring);
+	}
+	
 }
 void Main_window::display_items(){
 	std::vector<Item*> items = _emporium->get_items_vector(0);
@@ -500,14 +509,13 @@ void Main_window::display_items(){
 	dstring = "";
 	Gtk::Box* item_box;
 	Gtk::Image *item_image;
-	update_display();
-	for(int i=0;i<items.size();i++){
+	for(Item* item : items){
 		item_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-		item_image = new Gtk::Image{items[i]->get_image_file_path()};
+		item_image = new Gtk::Image{item->get_image_file_path()};
 		item_box->pack_start(*item_image);
-		Gtk::Label *item_label = Gtk::manage(new Gtk::Label(items[i]->to_string()));
+		Gtk::Label *item_label = Gtk::manage(new Gtk::Label(item->to_string()));
 		item_box->pack_start(*item_label);
-		vboxes.push_back(item_box);
+		item_boxes.push_back(item_box);
 		displayBox->pack_start(*item_box);
 	}
 	displayBox->show_all();

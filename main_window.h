@@ -30,6 +30,7 @@ class Main_window : public Gtk::Window{
         void on_verify_serving_click();
         void on_register_customer_click();
 		void on_view_order_click();
+		void on_change_server_salary_click();
     private:
     	Emporium* _emporium;
     	User* _user;
@@ -37,8 +38,8 @@ class Main_window : public Gtk::Window{
     	int activeWindow=0;
     	std::vector<Gtk::Entry *> entries;
     	std::vector<Gtk::ComboBoxText *> cboxs;
-    	std::vector<Gtk::Box *> vboxes;
-        void update_display();                    // Update display
+    	std::vector<Gtk::Box *> item_boxes;
+        void update_display(int op);//0 clean with just text;1 display items
         void display_items();
         Gtk::Box *vbox;
         Gtk::Box *displayBox;
@@ -71,6 +72,7 @@ class Main_window : public Gtk::Window{
 			Gtk::MenuItem *menuitem_add_manager;
     			Gtk::MenuItem *menuitem_add_item;
     			Gtk::MenuItem *menuitem_hire_server;
+    			Gtk::MenuItem *menuitem_change_server_salary;
     			Gtk::MenuItem *menuitem_reports;
     			Gtk::Menu *menu_reports;
     				Gtk::MenuItem *menuitem_server_report;

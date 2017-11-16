@@ -199,12 +199,38 @@ void Emporium::delete_user(std::string username){
 		_users.erase(_users.begin()+index);
 	}
 }
-std::string Emporium::list_users(){
+std::string Emporium::list_users(int op){
 	std::string output="";
-	for(int i=0;i<_users.size();i++){
-		output+=_users[i]->to_string();
+	for(User* user : _users){
+		if(op==0){
+			output+= user->to_string();
+		}else if(user->get_privilege()==op-1){
+			output+= user->to_string();	
+		}
 	}
 	return output;
+}
+std::vector<User*> Emporium::get_users_vector(int op){
+	std::vector<User*> users;
+	for(User* user : _users){
+		if(op==0){
+			users.push_back(user);
+		}else if(user->get_privilege()==op-1){
+			users.push_back(user);
+		}
+	}
+	return users;
+}
+std::vector<std::string> Emporium::get_users_name_vector(int op){
+	std::vector<std::string> users_names;
+	for(User* user : _users){
+		if(op==0){
+			users_names.push_back(user->get_name());
+		}else if(user->get_privilege()==op-1){
+			users_names.push_back(user->get_name());
+		}
+	}
+	return users_names;
 }
 void Emporium::add_item(Item* item){
 	_items.push_back(item);
@@ -439,19 +465,29 @@ void Emporium::pay_order(std::string order_id){
 	_cash_register.make_transaction(order->get_retail_price(),order->order_summary());
 }
 void Emporium::cancel_order(std::string order_id){
-	for(int i=0;i<_orders.size();i++){
-		if(_orders[i]->get_id()==order_id){
-			_orders[i]->cancel();
+	for(Order* order : _orders){
+		if(order->get_id()==order_id){
+			order->cancel();
 		}
 	}
 }
 Order* Emporium::get_order(std::string order_id){
-	for(int i=0;i<_orders.size();i++){
-		if(_orders[i]->get_id()==order_id){
-			return _orders[i];
+	for(Order* order : _orders){
+		if(order->get_id()==order_id){
+			return order;
 		}
 	}
 }
 std::string Emporium::get_profit_loss_statement(){
 	return _cash_register.statement();
+}
+std::string Emporium::get_inventory_report(){
+	std::string output="Item Name\tStock Remaining\n";
+	for(Item* item : _items){
+		output+= item->get_name()+": "+std::to_string(item->get_stock_remaining())+"\n";
+	}
+	return output;
+}
+std::string Emporium::get_server_report(){
+	return list_users(2);
 }

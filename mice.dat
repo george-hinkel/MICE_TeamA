@@ -59,21 +59,24 @@ server
 password
 Loyal Server
 100
-8.250000
+6.250000
 1
 username
 password
 name
 100
 8.250000
+1
+joshguy
+819918
+Josh Guyman
+3
+8.250000
 end users
 transactions
 wh
 -10.000000
 20 x Chocolate purchased and stocked.
-wh
--0.000000
-0 x name purchased and stocked.
 wh
 -20.000000
 200 x Plastic Bag purchased and stocked.

@@ -11,3 +11,9 @@ std::string Server::to_string(){
 std::string Server::to_file_string(){
 	return User::to_file_string()+std::to_string(_all_time_orders_filled)+"\n"+std::to_string(_hourly_wage)+"\n";
 }
+void Server::set_hourly_wage(double new_wage){
+	_hourly_wage=new_wage;
+}
+double Server::get_hourly_wage(){
+	return _hourly_wage;
+}

@@ -15,7 +15,9 @@ public:
     void add_user(User* user);
     User* get_user(std::string username);
     void delete_user(std::string username);
-    std::string list_users();
+    std::string list_users(int op);//0=all;1=customers;2=servers;3=managers
+    std::vector<User*> get_users_vector(int op);
+    std::vector<std::string> get_users_name_vector(int op);
     
     void add_item(Item* item);
     Item* get_item(std::string name);
@@ -38,6 +40,8 @@ public:
     Order* get_order(std::string order_id);
     
     std::string get_profit_loss_statement();
+    std::string get_inventory_report();
+    std::string get_server_report();
 private:
     std::vector<Item*> _items; //stock of items
     std::vector<User*> _users; //users i.e. servers, customers etc
