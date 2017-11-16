@@ -34,6 +34,9 @@ std::string Item::to_file_string(int op){
 	}else if(op==1){
 		return _name+"\n";
 	}
+	else if (op==2){
+		return _type+"\n"+_name+"\n"+std::to_string(_stock_remaining)+"\n";
+	}
 }
 double Item::get_stock_wholesale_cost(){
 	return _wholesale_cost*_stock_remaining;

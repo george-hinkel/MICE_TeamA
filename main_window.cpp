@@ -317,7 +317,12 @@ void Main_window::on_hire_server_click(){
 }
 void Main_window::on_server_report_click(){}
 void Main_window::on_customer_report_click(){}
-void Main_window::on_inventory_report_click(){}
+void Main_window::on_inventory_report_click(){
+	// words go here
+	tstring = "Inventory Report...";
+	//dstring = Item::to_file_string(2);
+	update_display();
+}
 void Main_window::on_order_report_click(){}
 void Main_window::on_profit_loss_statement_click(){
 	tstring = "Profit and Loss Statement...";
