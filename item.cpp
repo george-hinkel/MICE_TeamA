@@ -1,7 +1,6 @@
 #include "item.h"
 #include <string>
-#include <cstdio>
-#include <iostream>
+#include <sstream>
 Item::Item(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path) : _name{name},_description{description},_wholesale_cost{wholesale_cost},_retail_price{retail_price},_stock_remaining{initial_stock},_image_file_path{image_file_path} {
 	_type="item";
 }
@@ -12,9 +11,14 @@ void Item::modify_stock(int quantity_to_Add){
     _stock_remaining=_stock_remaining+quantity_to_Add;
 }
 std::string Item::to_string(){
-    char output[_name.length()+_description.length()+100];
-    std::sprintf(output,"Name: %s\tWholesale Cost: %0.2lf\tRetail Price: %0.2lf\tStock Remaining: %d\nDescription: %s\n",_name.c_str(),_wholesale_cost,_retail_price,_stock_remaining,_description.c_str());
-    return output;
+	std::string t="        ";
+	std::stringstream ss;
+	ss.precision(3);
+	ss << "Name: " << _name << t;
+	ss << "Wholesale Cost: " << _wholesale_cost << t;
+	ss << "Retail Price: " << _retail_price << t;
+	ss << "Stock Remaining: " << _stock_remaining;
+	return ss.str();
 }
 std::string Item::get_name(){
 	return _name;
