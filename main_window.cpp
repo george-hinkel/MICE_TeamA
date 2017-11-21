@@ -323,14 +323,25 @@ void Main_window::on_server_report_click(){
 	dstring = _emporium->get_server_report();
 	update_display(0);
 }
-void Main_window::on_customer_report_click(){}
+void Main_window::on_customer_report_click(){
+	tstring = "Customer Report...";
+	dstring = _emporium->get_customer_report();
+	update_display(0);
+}
 void Main_window::on_inventory_report_click(){
-	// words go here
 	tstring = "Inventory Report...";
 	dstring = _emporium->get_inventory_report();
 	update_display(0);
 }
-void Main_window::on_order_report_click(){}
+void Main_window::on_order_report_click(){
+	//std::string orders = _emporium->list_orders(0,1);
+	//std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	//Order* order = _emporium->get_order_report(order_id);
+	//int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"},*this);
+	tstring = "Order Report...";
+	dstring = _emporium->get_order_report();
+	update_display(0);
+}
 void Main_window::on_profit_loss_statement_click(){
 	tstring = "Profit and Loss Statement...";
 	dstring = _emporium->get_profit_loss_statement();

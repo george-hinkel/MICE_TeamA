@@ -38,10 +38,12 @@ public:
     void pay_order(std::string order_id);
     void cancel_order(std::string order_id);
     Order* get_order(std::string order_id);
-    
+   
+    std::string get_order_report();
     std::string get_profit_loss_statement();
     std::string get_inventory_report();
     std::string get_server_report();
+    std::string get_customer_report();
 private:
     std::vector<Item*> _items; //stock of items
     std::vector<User*> _users; //users i.e. servers, customers etc
