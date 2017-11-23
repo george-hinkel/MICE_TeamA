@@ -500,6 +500,12 @@ std::string Emporium::get_inventory_report(){
 	}
 	return output;
 }
+void Emporium::restock_item(int how_much){
+	for(Item* item : _items){
+		item->modify_stock(how_much);
+	}
+	
+}
 std::string Emporium::get_server_report(){
 	return list_users(2);
 }

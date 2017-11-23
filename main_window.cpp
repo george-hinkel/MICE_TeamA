@@ -87,17 +87,17 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menuitem_register_customer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_register_customer_click));
     menu_server->append(*menuitem_register_customer);
     
-	//				C R E A T E   S E R V I N G
+	//			C R E A T E   S E R V I N G
     menuitem_s_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_s_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
     menu_server->append(*menuitem_s_create_serving);
      
-        //                    V I E W  S E R V I N G
+        //                   	 V I E W  S E R V I N G
     menuitem_s_view_serving = Gtk::manage(new Gtk::MenuItem("_View Serving", true));
     menuitem_s_view_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_view_serving_click));
     menu_server->append(*menuitem_s_view_serving);
     
-	//				A S S E M B L E   O R D E R
+	//			A S S E M B L E   O R D E R
     menuitem_s_assemble_order = Gtk::manage(new Gtk::MenuItem("_Assemble Order", true));
     menuitem_s_assemble_order->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_assemble_order_click));
     menu_server->append(*menuitem_s_assemble_order);
@@ -111,6 +111,11 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menuitem_checkout_order = Gtk::manage(new Gtk::MenuItem("_Checkout Order", true));
     menuitem_checkout_order->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_checkout_order_click));
     menu_server->append(*menuitem_checkout_order);
+
+    //				R E S T O C K   I T E M
+    menuitem_restock_item = Gtk::manage(new Gtk::MenuItem("_Restock Item", true));
+    menuitem_restock_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restock_item_click));
+    menu_server->append(*menuitem_restock_item);	
     
 	//		C U S T O M E R
     menuitem_customer = Gtk::manage(new Gtk::MenuItem("_Customer", true));
@@ -334,10 +339,6 @@ void Main_window::on_inventory_report_click(){
 	update_display(0);
 }
 void Main_window::on_order_report_click(){
-	//std::string orders = _emporium->list_orders(0,1);
-	//std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
-	//Order* order = _emporium->get_order_report(order_id);
-	//int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"},*this);
 	tstring = "Order Report...";
 	dstring = _emporium->get_order_report();
 	update_display(0);
@@ -443,6 +444,32 @@ void Main_window::on_checkout_order_click(){
 	tstring = "Orders...";
 	dstring = _emporium->list_orders(0,1);
 	update_display(0);
+}
+
+void Main_window::on_restock_item_click(){
+	//words go here
+	std::vector<Item*> temp;
+	std::vector<std::string> temps;
+	int index;
+	int number;
+	int op = Dialogs::question("Which type to restock?","Restock Item",{"Container","Scoop","Topping"},*this);
+	if (op == 0){
+		temp = _emporium->get_items_vector(1);
+		temps= _emporium->get_item_names_vector(1);
+		index = Dialogs::question(_emporium->list_items(1),"Choose a container",temps,*this);
+	}
+	else if (op == 1){
+		temp = _emporium->get_items_vector(2);
+		temps= _emporium->get_item_names_vector(2);
+		index = Dialogs::question(_emporium->list_items(2),"Choose a scoop",temps,*this);
+	}
+	else if (op == 2){
+		temp = _emporium->get_items_vector(3);
+		temps= _emporium->get_item_names_vector(3);
+		index = Dialogs::question(_emporium->list_items(2),"Choose a topping",temps,*this);
+	}
+	std::string how_much = Dialogs::input("How much would you like to restock?","Restock Item","0","0");
+	dstring = _emporium->get_inventory_report();
 }
 void Main_window::on_cancel_order_click(){
 	std::string orders = _emporium->list_orders(1,1);

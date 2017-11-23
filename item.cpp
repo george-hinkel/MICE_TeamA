@@ -7,6 +7,7 @@ Item::Item(std::string name,std::string description,double wholesale_cost,double
 int Item::get_stock_remaining(){
     return _stock_remaining;
 }
+
 void Item::modify_stock(int quantity_to_Add){
     _stock_remaining=_stock_remaining+quantity_to_Add;
 }

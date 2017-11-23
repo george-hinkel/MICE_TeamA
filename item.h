@@ -7,7 +7,6 @@ public:
     Item(std::string name,std::string description,double wholesale_cost,double retail_price,int initial_stock,std::string image_file_path="file-path");
     virtual std::string to_string();
     int get_stock_remaining();
-    //int add_to_stock();
     void modify_stock(int quantity_to_add);
     std::string get_name();
     std::string get_type();

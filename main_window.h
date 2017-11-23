@@ -24,6 +24,7 @@ class Main_window : public Gtk::Window{
         void on_assemble_order_click();
         void on_fill_order_click();
         void on_checkout_order_click();
+	void on_restock_item_click();
         void on_cancel_order_click();
         void on_run_test_click();
         void on_quit_click();
@@ -88,6 +89,7 @@ class Main_window : public Gtk::Window{
 				Gtk::MenuItem *menuitem_s_assemble_order;
 				Gtk::MenuItem *menuitem_fill_order;
 				Gtk::MenuItem *menuitem_checkout_order;
+				Gtk::MenuItem *menuitem_restock_item;
 			Gtk::MenuItem *menuitem_customer;
 			Gtk::Menu *menu_customer;
 				Gtk::MenuItem *menuitem_c_create_serving;
