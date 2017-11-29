@@ -76,6 +76,13 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menuitem_profit_loss_statement->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_profit_loss_statement_click));
     menu_reports->append(*menuitem_profit_loss_statement);
 
+    //         S A V E
+    // Append Save to the File menu
+    Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem{"_Save", true});
+    menuitem_save->signal_activate().connect(sigc::mem_fun(*this, 
+        &Main_window::on_save_click));
+    menu_manager->append(*menuitem_save);
+
 	//		S E R V E R
     menuitem_server = Gtk::manage(new Gtk::MenuItem("_Server", true));
     menubar->append(*menuitem_server);
@@ -123,7 +130,7 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menu_customer = Gtk::manage(new Gtk::Menu());
     menuitem_customer->set_submenu(*menu_customer);
     
-	//				C R E A T E   S E R V I N G
+	//			C R E A T E   S E R V I N G
     menuitem_c_create_serving = Gtk::manage(new Gtk::MenuItem("_Create Serving", true));
     menuitem_c_create_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_create_serving_click));
     menu_customer->append(*menuitem_c_create_serving);
@@ -164,6 +171,12 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     // Add a toolbar to the vertical box below the menu
     Gtk::Toolbar *toolbar = Gtk::manage(new Gtk::Toolbar);
     vbox->add(*toolbar);
+
+    //		S A V E   F U N C T I O N
+    Gtk::ToolButton *save_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::SAVE));
+    save_button->set_tooltip_markup("Save emporium");
+    save_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_save_click));
+    toolbar->append(*save_button);
 
     //     A D D   I T E M
     button_add_item = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
@@ -305,6 +318,8 @@ Main_window::~Main_window() { }
 // /////////////////
 // C A L L B A C K S
 // /////////////////
+
+void Main_window::on_save_click() {}
 
 void Main_window::on_add_manager_click(){
 	User* user = Dialogs::create_user(2);

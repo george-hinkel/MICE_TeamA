@@ -11,7 +11,7 @@ class Main_window : public Gtk::Window{
         Main_window(Emporium* emporium,User* user);
         virtual ~Main_window();
     protected:
-		void on_add_manager_click();
+	void on_add_manager_click();
         void on_add_item_click();  
         void on_hire_server_click(); 
         void on_server_report_click();
@@ -30,8 +30,9 @@ class Main_window : public Gtk::Window{
         void on_quit_click();
         void on_verify_serving_click();
         void on_register_customer_click();
-		void on_view_order_click();
-		void on_change_server_salary_click();
+	void on_view_order_click();
+	void on_change_server_salary_click();
+	void on_save_click();
     private:
     	Emporium* _emporium;
     	User* _user;
