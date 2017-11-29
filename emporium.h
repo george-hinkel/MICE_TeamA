@@ -40,6 +40,7 @@ public:
     Order* get_order(std::string order_id);
    
     std::string get_order_report();
+    std::string get_order_report_complete();
     void restock_item(int how_much);
     std::string get_profit_loss_statement();
     std::string get_inventory_report();

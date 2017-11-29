@@ -340,7 +340,13 @@ void Main_window::on_inventory_report_click(){
 }
 void Main_window::on_order_report_click(){
 	tstring = "Order Report...";
-	dstring = _emporium->get_order_report();
+	int complete = Dialogs::question("Would you like the complete report or the pending orders report?", "Which order report?",{"Complete","Pending"},*this);
+	if(complete == 0){
+		dstring = _emporium->get_order_report_complete();
+	}
+	else{
+		dstring = _emporium->get_order_report();
+	}
 	update_display(0);
 }
 void Main_window::on_profit_loss_statement_click(){

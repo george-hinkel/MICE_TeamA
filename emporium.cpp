@@ -479,14 +479,22 @@ Order* Emporium::get_order(std::string order_id){
 	}
 }
 std::string Emporium::get_order_report(){
-	//std::vector<std::string> all_orders;
-	//int order_id=0;
 	std::string all_orders = "All Pending Orders:\n";
 	for(Order* order : _orders){
 		if (order->get_status() != "paid"){
 			all_orders += order->to_string(0);
 			all_orders += "\n";
 		}
+	}
+	return all_orders;
+}
+std::string Emporium::get_order_report_complete(){
+	std::string all_orders = "Complete Order Report:\n";
+	for(Order* order : _orders){
+		//if (order->get_status() != "paid"){
+			all_orders += order->to_string(0);
+			all_orders += "\n";
+		//}
 	}
 	return all_orders;
 }
