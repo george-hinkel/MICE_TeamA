@@ -33,6 +33,7 @@ class Main_window : public Gtk::Window{
 	void on_view_order_click();
 	void on_change_server_salary_click();
 	void on_save_click();
+	void on_edit_item_click();
     private:
     	Emporium* _emporium;
     	User* _user;
@@ -65,6 +66,7 @@ class Main_window : public Gtk::Window{
         Gtk::ToolButton *button_checkout_order;
         Gtk::ToolButton *button_cancel_order;
         Gtk::ToolButton *button_run_test;
+        //Gtk::ToolButton *button_edit_item;
         Gtk::ToolButton *quit_button;
     
     //menubar design
@@ -73,6 +75,7 @@ class Main_window : public Gtk::Window{
     		Gtk::Menu *menu_manager;
 			Gtk::MenuItem *menuitem_add_manager;
     			Gtk::MenuItem *menuitem_add_item;
+    			Gtk::MenuItem *menuitem_edit_item;
     			Gtk::MenuItem *menuitem_hire_server;
     			Gtk::MenuItem *menuitem_change_server_salary;
     			Gtk::MenuItem *menuitem_reports;

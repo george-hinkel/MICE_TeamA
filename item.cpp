@@ -49,3 +49,6 @@ double Item::get_stock_wholesale_cost(){
 std::string Item::get_image_file_path(){
 	return _image_file_path;
 }
+std::string Item::get_description(){
+	return _description;
+}

@@ -15,6 +15,7 @@ public:
     virtual std::string to_file_string(int op);
     double get_stock_wholesale_cost();
     std::string get_image_file_path();
+    std::string get_description();
 protected:
     std::string _type;
     std::string _name;

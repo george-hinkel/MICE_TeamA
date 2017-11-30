@@ -37,10 +37,9 @@ int Dialogs::question(string msg, string title,
 }
 
 // A request for a line of text input
-string Dialogs::input(string msg, string title, string default_text, 
+string Dialogs::input(Gtk::Window& parent,string msg, string title, string default_text, 
              string cancel_text) {
-    Gtk::Dialog *dialog = new Gtk::Dialog();
-    dialog->set_title(title);
+    Gtk::Dialog *dialog = new Gtk::Dialog(title,parent);
 
     Gtk::Label *label = new Gtk::Label(msg);
     dialog->get_content_area()->pack_start(*label);
@@ -469,7 +468,7 @@ User* Dialogs::create_user(int user_type){
     else
         return user;
 }
-User* Dialogs::login(Emporium* emporium) {
+User* Dialogs::login(Gtk::Window& parent,Emporium* emporium) {
 	bool valid_username=false;
 	User* user=emporium->get_user("admin");
 	int result;
@@ -479,8 +478,7 @@ User* Dialogs::login(Emporium* emporium) {
 		return user;
 	}
 	while(!valid_username){
-    	Gtk::Dialog *dialog = new Gtk::Dialog();
-    	dialog->set_title("Login");
+    	Gtk::Dialog *dialog = new Gtk::Dialog("Login",parent);
 
     	Gtk::Label *label = new Gtk::Label("Enter username:");
     	dialog->get_content_area()->pack_start(*label);
@@ -521,8 +519,7 @@ User* Dialogs::login(Emporium* emporium) {
 	}
 	int tries_left = 5;
 	while(tries_left>0){
-		Gtk::Dialog *dialog = new Gtk::Dialog();
-    	dialog->set_title("Login");
+		Gtk::Dialog *dialog = new Gtk::Dialog("Login",parent);
 
     	Gtk::Label *label = new Gtk::Label("Enter password for "+user->get_username());
     	dialog->get_content_area()->pack_start(*label);
@@ -561,4 +558,217 @@ User* Dialogs::login(Emporium* emporium) {
 	}
 	null_user = new User("NULL","NULL","Failed ");
 	return null_user;
+}
+
+Item* Dialogs::edit_item(Gtk::Window& parent,Item* orig_item){
+	int item_type;
+	std::string type=orig_item->get_type();
+	if(type=="scoop"){
+		item_type=0;
+	}else if(type=="container"){
+		item_type=1;
+	}else if(type=="topping"){
+		item_type=2;
+	}
+	vector<string> output;
+	Gtk::Dialog *dialog = new Gtk::Dialog("Editing an existing item...",parent);
+    
+    dialog->add_button("Cancel", 0);
+    dialog->add_button("OK", 1);
+    dialog->set_default_response(1);
+    
+    //name entry
+    Gtk::HBox *nameB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*nameB);
+    nameB->set_homogeneous();
+    nameB->show();
+    
+    Gtk::Label *nameP = new Gtk::Label("Name:");
+    nameB->pack_start(*nameP);
+    nameP->show();
+    
+    Gtk::Entry *nameE = new Gtk::Entry{};
+    nameE->set_text(orig_item->get_name());
+    nameE->set_max_length(50);
+    nameE->show();
+    nameB->pack_start(*nameE);
+    
+    //description entry
+    Gtk::HBox *descriptionB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*descriptionB);
+    descriptionB->set_homogeneous();
+    descriptionB->show();
+    
+    Gtk::Label *descriptionP = new Gtk::Label("Description:");
+    descriptionB->pack_start(*descriptionP);
+    descriptionP->show();
+    
+    Gtk::Entry *descriptionE = new Gtk::Entry{};
+    descriptionE->set_text(orig_item->get_description());
+    descriptionE->set_max_length(300);
+    descriptionE->show();
+    descriptionB->pack_start(*descriptionE);
+    
+    //wholesale cost entry
+    Gtk::HBox *wholesale_costB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*wholesale_costB);
+    wholesale_costB->set_homogeneous();
+    wholesale_costB->show();
+    
+    Gtk::Label *wholesale_costP = new Gtk::Label("Wholesale Cost:");
+    wholesale_costB->pack_start(*wholesale_costP);
+    wholesale_costP->show();
+    
+    Gtk::Entry *wholesale_costE = new Gtk::Entry{};
+    wholesale_costE->set_text(std::to_string(orig_item->get_wholesale_cost()));
+    wholesale_costE->set_max_length(50);
+    wholesale_costE->show();
+    wholesale_costB->pack_start(*wholesale_costE);
+    
+    //retail price entry
+    Gtk::HBox *retail_priceB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*retail_priceB);
+    retail_priceB->set_homogeneous();
+    retail_priceB->show();
+    
+    Gtk::Label *retail_priceP = new Gtk::Label("Retail Price:");
+    retail_priceB->pack_start(*retail_priceP);
+    retail_priceP->show();
+    
+    Gtk::Entry *retail_priceE = new Gtk::Entry{};
+    retail_priceE->set_text(std::to_string(orig_item->get_retail_price()));
+    retail_priceE->set_max_length(50);
+    retail_priceE->show();
+    retail_priceB->pack_start(*retail_priceE);
+    
+    //initial stock entry
+    Gtk::HBox *initial_stockB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*initial_stockB);
+    initial_stockB->set_homogeneous();
+    initial_stockB->show();
+    
+    Gtk::Label *initial_stockP = new Gtk::Label("Current Stock:");
+    initial_stockB->pack_start(*initial_stockP);
+    initial_stockP->show();
+    
+    Gtk::Entry *initial_stockE = new Gtk::Entry{};
+    initial_stockE->set_text(std::to_string(orig_item->get_stock_remaining()));
+    initial_stockE->set_max_length(50);
+    initial_stockE->show();
+    initial_stockB->pack_start(*initial_stockE);
+    
+    //image file path entry
+    Gtk::HBox *image_file_pathB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*image_file_pathB);
+    image_file_pathB->set_homogeneous();
+    image_file_pathB->show();
+    
+    Gtk::Label *image_file_pathP = new Gtk::Label("Image File Path:");
+    image_file_pathB->pack_start(*image_file_pathP);
+    image_file_pathP->show();
+    
+    Gtk::Entry *image_file_pathE = new Gtk::Entry{};
+    image_file_pathE->set_text(orig_item->get_image_file_path());
+    image_file_pathE->set_max_length(100);
+    image_file_pathE->show();
+    image_file_pathB->pack_start(*image_file_pathE);
+    
+    //max scoops entry
+    Gtk::HBox *max_scoopsB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*max_scoopsB);
+    max_scoopsB->set_homogeneous();
+    
+    Gtk::Label *max_scoopsP = new Gtk::Label("Max Scoops:");
+    max_scoopsB->pack_start(*max_scoopsP);
+    
+    Gtk::Entry *max_scoopsE = new Gtk::Entry{};
+    max_scoopsE->set_max_length(50);
+    max_scoopsB->pack_start(*max_scoopsE);
+    
+    if(item_type==1){
+    	max_scoopsE->set_text(std::to_string(static_cast<Mice::Container*>(orig_item)->get_max_scoops()));
+    	max_scoopsB->show();
+    	max_scoopsP->show();
+    	max_scoopsE->show();
+    }
+    
+    //quantifier entry
+    Gtk::HBox *quantifierB = new Gtk::HBox();
+    dialog->get_vbox()->pack_start(*quantifierB);
+    quantifierB->set_homogeneous();
+    
+    Gtk::Label *quantifierP = new Gtk::Label("Amount Qualifier:");
+    quantifierB->pack_start(*quantifierP);
+    
+    Gtk::ComboBoxText *quantifierC = new Gtk::ComboBoxText();
+    quantifierC->append("0","light");
+    quantifierC->append("1","normal");
+    quantifierC->append("2","extra");
+    quantifierC->append("3","drenched");
+    quantifierB->pack_start(*quantifierC);
+    
+    if(item_type==2){
+        quantifierC->set_active(static_cast<Topping*>(orig_item)->get_quantifier());
+    	quantifierB->show();
+    	quantifierP->show();
+    	quantifierC->show();
+    }
+    
+    int result = dialog->run();
+    output.push_back(nameE->get_text());
+    output.push_back(descriptionE->get_text());
+    output.push_back(wholesale_costE->get_text());
+    output.push_back(retail_priceE->get_text());
+    output.push_back(initial_stockE->get_text());
+    output.push_back(image_file_pathE->get_text());
+    if(item_type==1)
+    output.push_back(max_scoopsE->get_text());
+    if(item_type==2)
+    output.push_back(quantifierC->get_active_id());
+    dialog->close();
+    while (Gtk::Main::events_pending())  Gtk::Main::iteration();
+
+    delete nameP;
+    delete nameE;
+    delete nameB;
+    delete descriptionP;
+    delete descriptionE;
+    delete descriptionB;
+    delete wholesale_costP;
+    delete wholesale_costE;
+    delete wholesale_costB;
+    delete retail_priceP;
+    delete retail_priceE;
+    delete retail_priceB;
+    delete initial_stockP;
+    delete initial_stockE;
+    delete initial_stockB;
+    delete image_file_pathP;
+    delete image_file_pathE;
+    delete image_file_pathB;
+    delete max_scoopsP;
+    delete max_scoopsE;
+    delete max_scoopsB;
+    delete quantifierP;
+    delete quantifierC;
+    delete quantifierB;
+    delete dialog;
+	
+	Item* item;
+	switch(item_type){
+		case 0: item = new Scoop(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),output[5]);
+			break;
+		case 1: item = new Mice::Container(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),output[5],stoi(output[6]));
+			break;
+		case 2: item = new Topping(output[0],output[1],stod(output[2]),stod(output[3]),stoi(output[4]),output[5],stoi(output[6]));
+			break;
+		default: item = new Item("NULL","NULL",0,0,0);
+			break;
+	}
+	
+    if (result == 1){
+    	return item;
+    }else{
+    	
+    }
 }

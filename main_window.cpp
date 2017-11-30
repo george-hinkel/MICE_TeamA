@@ -35,6 +35,11 @@ Main_window::Main_window(Emporium* emporium,User* user) : _emporium{emporium},_u
     menuitem_add_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_add_item_click));
     menu_manager->append(*menuitem_add_item);
     
+    //				E D I T   I T E M
+    menuitem_edit_item = Gtk::manage(new Gtk::MenuItem("_Edit Item", true));
+    menuitem_edit_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
+    menu_manager->append(*menuitem_edit_item);
+    
     //				H I R E   S E R V E R
     menuitem_hire_server = Gtk::manage(new Gtk::MenuItem("_Hire Server", true));
     menuitem_hire_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_hire_server_click));
@@ -386,7 +391,7 @@ void Main_window::on_create_serving_click(){
 	//add 1-N scoops
 	temp = _emporium->get_items_vector(2);
 	temps= _emporium->get_item_names_vector(2);
-	number=stoi(Dialogs::input("How many scoops would you like?","Choose number of scoops","1","1"));
+	number=stoi(Dialogs::input(*this,"How many scoops would you like?","Choose number of scoops","1","1"));
 	for(int i=0;i<number;i++){
 		index = Dialogs::question(_emporium->list_items(2),"Choose a scoop",temps,*this);
 		_emporium->create_item_instance(temp[index]);
@@ -395,7 +400,7 @@ void Main_window::on_create_serving_click(){
 	//add 0-N toppings
 	temp = _emporium->get_items_vector(3);
 	temps= _emporium->get_item_names_vector(3);
-	number=stoi(Dialogs::input("How many toppings would you like?","Choose number of toppings","0","0"));
+	number=stoi(Dialogs::input(*this,"How many toppings would you like?","Choose number of toppings","0","0"));
 	for(int i=0;i<number;i++){
 		index = Dialogs::question(_emporium->list_items(2),"Choose a topping",temps,*this);
 		tempitem=_emporium->create_item_instance(temp[index]);
@@ -408,7 +413,7 @@ void Main_window::on_create_serving_click(){
 	update_display(0);
 }
 void Main_window::on_view_serving_click(){
-        std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
+        std::string serving_id = Dialogs::input(*this,_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);
 	int done_view = Dialogs::question(serving->to_string(), "Ready to fill order?",{"Yes","No"},*this);
 	dstring = std::to_string(done_view);
@@ -422,9 +427,9 @@ void Main_window::on_assemble_order_click(){
 	std::string servings=_emporium->get_serving_listing();
 	int index=0;
 	
-	number=stoi(Dialogs::input("How many servings are in this order?","Choose number of servings","1","1"));
+	number=stoi(Dialogs::input(*this,"How many servings are in this order?","Choose number of servings","1","1"));
 	for(int i=0;i<number;i++){
-		index=stoi(Dialogs::input(servings,"Choose serving index","0","0"));
+		index=stoi(Dialogs::input(*this,servings,"Choose serving index","0","0"));
 		serving_indexes.push_back(index);
 	}
 	
@@ -435,7 +440,7 @@ void Main_window::on_assemble_order_click(){
 }
 void Main_window::on_view_order_click(){
 	std::string orders = _emporium->list_orders(0,1);
-	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	std::string order_id=Dialogs::input(*this,orders,"Choose order id","0","0");
 	Order* order = _emporium->get_order(order_id);
 	int done_view = Dialogs::question(order->to_string(0), "Click when done viewing",{"Okay"},*this);
 	tstring = "";
@@ -444,7 +449,7 @@ void Main_window::on_view_order_click(){
 }
 void Main_window::on_fill_order_click(){
 	std::string orders = _emporium->list_orders(1,1);
-	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	std::string order_id=Dialogs::input(*this,orders,"Choose order id","0","0");
 	try{
 		_emporium->fill_order(order_id);
 	}catch(Order::Invalid_status_change e){
@@ -456,7 +461,7 @@ void Main_window::on_fill_order_click(){
 }
 void Main_window::on_checkout_order_click(){
 	std::string orders = _emporium->list_orders(2,1);
-	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	std::string order_id=Dialogs::input(*this,orders,"Choose order id","0","0");
 	try{
 		_emporium->pay_order(order_id);
 	}catch(Order::Invalid_status_change e){
@@ -489,12 +494,12 @@ void Main_window::on_restock_item_click(){
 		temps= _emporium->get_item_names_vector(3);
 		index = Dialogs::question(_emporium->list_items(2),"Choose a topping",temps,*this);
 	}
-	std::string how_much = Dialogs::input("How much would you like to restock?","Restock Item","0","0");
+	std::string how_much = Dialogs::input(*this,"How much would you like to restock?","Restock Item","0","0");
 	dstring = _emporium->get_inventory_report();
 }
 void Main_window::on_cancel_order_click(){
 	std::string orders = _emporium->list_orders(1,1);
-	std::string order_id=Dialogs::input(orders,"Choose order id","0","0");
+	std::string order_id=Dialogs::input(*this,orders,"Choose order id","0","0");
 	try{
 		_emporium->cancel_order(order_id);
 	}catch(Order::Invalid_status_change e){
@@ -505,6 +510,7 @@ void Main_window::on_cancel_order_click(){
 	update_display(0);
 }
 void Main_window::on_run_test_click(){
+	update_display(2);
     update_display(1);
 }
 void Main_window::on_quit_click(){
@@ -512,7 +518,7 @@ void Main_window::on_quit_click(){
 	hide();
 }
 void Main_window::on_verify_serving_click(){
-	std::string serving_id = Dialogs::input(_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
+	std::string serving_id = Dialogs::input(*this,_emporium->list_servings(),"Input serving id of your serving...","serving id #","");
 	Serving* serving = _emporium->get_serving(serving_id);
 	int op = Dialogs::question(serving->to_string(),"Is your serving correct?",{"Yes","No"},*this);
 	dstring = std::to_string(op);
@@ -535,12 +541,17 @@ void Main_window::on_change_server_salary_click(){
 	int server_index = Dialogs::question("Choose whose salary to change.","Changing Server Salary...",servers_names,*this);
 	server=(Server*)servers[server_index];
 	std::string msg = "Old salary: "+std::to_string(server->get_hourly_wage())+"\nChoose a new salary!";
-	double new_salary = stod(Dialogs::input(msg,"Set New Salary...","0.00",std::to_string(server->get_hourly_wage())));
+	double new_salary = stod(Dialogs::input(*this,msg,"Set New Salary...","0.00",std::to_string(server->get_hourly_wage())));
 	if(new_salary!=server->get_hourly_wage()){
 		server->set_hourly_wage(new_salary);
 	}
 }
-
+void Main_window::on_edit_item_click(){
+	std::string name=Dialogs::input(*this,"Enter the name of the item to edit:","Editing an item...");
+	Item* orig_item=_emporium->get_item(name);
+	Item* new_item=Dialogs::edit_item(*this,orig_item);
+	_emporium->replace_item(name,new_item);
+}
 // /////////////////
 // U T I L I T I E S
 // /////////////////

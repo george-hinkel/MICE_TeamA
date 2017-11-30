@@ -244,9 +244,15 @@ Item* Emporium::get_item(std::string name){
 			return _items[i];
 		}
 	}
-	Item* null_item = (Item*)malloc(sizeof(Item));
-	null_item = new Item("NULL","NULL",0,0,0,"NULL");
+	Item* null_item = new Item("NULL","NULL",0,0,0,"NULL");
 	return null_item;
+}
+void Emporium::replace_item(std::string name,Item* new_item){
+	for(int i=0;i<_items.size();i++){
+		if(_items[i]->get_name()==name){
+			_items[i]=new_item;
+		}
+	}
 }
 std::string Emporium::list_items(int op){
 	std::string output="";

@@ -18,7 +18,7 @@ class Dialogs {
                  vector<string> buttons,Gtk::Window& parent);
 
     // A request for a line of text input
-    static string input(string msg, string title = "Input", string default_text = "", 
+    static string input(Gtk::Window& parent,string msg, string title = "Input", string default_text = "", 
                  string cancel_text = "CANCEL");
 
     // Display an image from a disk file
@@ -28,6 +28,8 @@ class Dialogs {
     
     static User* create_user(int user_type); 
     	//0=customer;1=server;2=manager
-    static User* login(Emporium* emporium);
+    static User* login(Gtk::Window& parent,Emporium* emporium);
+    
+    static Item* edit_item(Gtk::Window& parent,Item* item);
 };
 #endif

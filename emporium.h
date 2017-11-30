@@ -21,6 +21,7 @@ public:
     
     void add_item(Item* item);
     Item* get_item(std::string name);
+    void replace_item(std::string name,Item* new_item);
     std::string list_items(int op);//0=all;1=containers;2=scoops;3=toppings
     std::vector<Item*> get_items_vector(int op);//same as above
     std::vector<std::string> get_item_names_vector(int op);//same as above

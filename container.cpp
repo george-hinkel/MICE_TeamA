@@ -19,4 +19,7 @@ std::string Container::to_file_string(int op){
 		return Item::to_file_string(op);
 	}
 }
+int Container::get_max_scoops(){
+	return _max_scoops;
+}
 }
